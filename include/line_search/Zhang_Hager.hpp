@@ -7,10 +7,9 @@
 namespace optim
 {
     /// @brief Zhang-Hager line search
-    template <typename fp_t = double,
-              bool use_prox = false>
+    template <typename fp_t = double>
     class ZHLineSearch final
-        : public LineSearcher<fp_t, use_prox>
+        : public LineSearcher<fp_t>
     {
     public:
         using Problem = LineSearcher<fp_t>::Problem;
@@ -63,12 +62,6 @@ namespace optim
                     step == this->min_step)
                 {
                     this->prob->grad(out_x, out_grad);
-                    constexpr if (use_prox)
-                    {
-                        Mat<fp_t> prox_x = out_x;
-                        this->prob->prox(step, out_x, prox_x);
-                        out_x = std::move(prox_x);
-                    }
                     // update pQ, Q, Cval
                     pQ = Q, Q = gamma * Q + 1;
                     Cval = (gamma * pQ * Cval + out_loss) / Q;

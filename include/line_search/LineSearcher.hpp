@@ -6,11 +6,10 @@
 
 namespace optim
 {
-    template <typename fp_t,
-              bool use_prox = false>
+    template <typename fp_t>
     struct LineSearcher
     {
-        using Problem = ProxWrapper<fp_t, GradProblem, use_prox>;
+        using Problem = GradProblem<fp_t>;
         using Constant = OptimConst<fp_t>;
 
     protected:
