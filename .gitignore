@@ -1,0 +1,6 @@
+eigen3
+armadillo
+.vscode
+bin
+lib
+build
