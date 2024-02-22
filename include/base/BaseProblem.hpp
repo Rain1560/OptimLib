@@ -25,7 +25,7 @@ namespace optim
 
     template <typename fp_t>
     struct StoGradProblem
-        : virtual public BaseProblem<fp_t>
+        : public BaseProblem<fp_t>
     {
         virtual void grad(
             const Mat<fp_t> &in_x,
@@ -35,7 +35,7 @@ namespace optim
 
     template <typename fp_t>
     struct GradProblem
-        : virtual public BaseProblem<fp_t>
+        : public BaseProblem<fp_t>
     {
         virtual void grad(
             const Mat<fp_t> &in_x,
@@ -44,7 +44,7 @@ namespace optim
 
     template <typename fp_t>
     struct HessProblem
-        : virtual public GradProblem<fp_t>
+        : public GradProblem<fp_t>
     {
         virtual void hess(
             const Mat<fp_t> &in_x,
@@ -56,18 +56,25 @@ namespace optim
         template <typename fp_t,
                   template <typename> class Problem>
         struct ProxOperator
+            : virtual public Problem<fp_t>
         {
-            virtual std::enable_if_t<
-                std::is_base_of_v<
-                    BaseProblem<fp_t>, Problem<fp_t>>,
-                fp_t>
-            nsm_loss(const Mat<fp_t> &in_x) = 0;
+            static_assert(std::is_base_of_v<BaseProblem<fp_t>, Problem<fp_t>>,
+                          "ProxOperator requires a BaseProblem");
+            virtual fp_t sm_loss(const Mat<fp_t> &x) = 0;
+
+            virtual fp_t nsm_loss(const Mat<fp_t> &x) = 0;
+
+            fp_t loss(const Mat<fp_t> &x) override
+            {
+                return sm_loss(x) + nsm_loss(x);
+            }
 
             virtual std::enable_if_t<
                 std::is_base_of_v<
                     GradProblem<fp_t>, Problem<fp_t>>,
                 void>
-            prox(const Mat<fp_t> &in_x,
+            prox(fp_t step,
+                 const Mat<fp_t> &in_x,
                  Mat<fp_t> &out_x) = 0;
         };
 
@@ -76,6 +83,8 @@ namespace optim
                   bool use_prox = false>
         struct ProxWrapper
         {
+            static_assert(std::is_base_of_v<BaseProblem<fp_t>, Problem<fp_t>>,
+                          "ProxWrapper requires a BaseProblem");
             using type = Problem<fp_t>;
         };
 
@@ -83,14 +92,18 @@ namespace optim
                   template <typename> class Problem>
         struct ProxWrapper<fp_t, Problem, true>
         {
-            using type = internal::ProxOperator<fp_t, Problem>;
+            static_assert(std::is_base_of_v<BaseProblem<fp_t>, Problem<fp_t>>,
+                          "ProxWrapper requires a BaseProblem");
+            using type = ProxOperator<fp_t, Problem>;
         };
     }
 
     template <typename fp_t,
               template <typename> class Problem,
               bool use_prox = false>
-    using ProxWrapper = typename internal::ProxWrapper<fp_t, Problem, use_prox>::type;
+    using ProxWrapper =
+        internal::ProxWrapper<
+            fp_t, Problem, use_prox>::type;
 }
 
 #endif

@@ -8,17 +8,16 @@ namespace optim
 {
     /*!
      @class LinearSearchMT
-     @brief More-Thuente line search which using gradient and loss value to find the step meets Wolfe condition. 
-     @tparam fp_t float point type
+     @brief More-Thuente line search
      */
     template <typename fp_t = double>
     class MTLineSearch final
-        : public LineSearcher<fp_t>
+        : public LineSearch<fp_t>
     {
         friend class BaseSolver<fp_t>;
 
     public:
-        using Problem = LineSearcher<fp_t>::Problem;
+        using Problem = LineSearch<fp_t>::Problem;
 
     private:
         int iter = 0;
@@ -149,8 +148,8 @@ namespace optim
                     { // minimal is too close to origin point!
                         optim_assert(a_l.val <= f_0,
                                      "f_t should be less than f_0. Please check your loss and grad func.");
-                        status = 1;
-                        return NAN;
+                        status = 1, g_0 = NAN;
+                        goto over;
                     }
                     step_max = max(a_l.arg, a_u.arg);
                     step_min = min(a_l.arg, a_u.arg);

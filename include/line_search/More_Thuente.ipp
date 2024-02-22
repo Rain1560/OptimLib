@@ -1,4 +1,4 @@
-#include "LineSearcher.hpp"
+#include "base.hpp"
 
 // reference: https://ftp.mcs.anl.gov/pub/MINPACK-2/csrch
 namespace optim::internal::MTLineSearch
@@ -6,11 +6,11 @@ namespace optim::internal::MTLineSearch
     template <typename fp_t>
     struct FuncVal
     {
-        fp_t arg;           ///< argument
-        fp_t val;           ///< function value(loss at pos)
-        fp_t deriv;         ///< derivative = grad^T * direc
-        Mat<fp_t> pos;      ///< position
-        Mat<fp_t> grad;     ///< gradient
+        fp_t arg;       ///< argument
+        fp_t val;       ///< function value(loss at pos)
+        fp_t deriv;     ///< derivative = grad^T * direc
+        Mat<fp_t> pos;  ///< position
+        Mat<fp_t> grad; ///< gradient
 
         FuncVal(fp_t argument, size_t rows, size_t cols)
             : arg(argument)
@@ -37,15 +37,8 @@ namespace optim::internal::MTLineSearch
             other.deriv = tmp;
         };
 
-        template <class Problem>
         void update_val(
-            Problem *prob,
-            const Mat<fp_t> &x0,
-            const Mat<fp_t> &d,
-            const fp_t sgn_d);
-
-        void update_val(
-            Problem<fp_t> *prob,
+            LineSearch<fp_t>::Problem *prob,
             const Mat<fp_t> &x0,
             const Mat<fp_t> &d,
             const fp_t sgn_d)

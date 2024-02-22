@@ -45,7 +45,7 @@
 #elif OPTIM_USE_ARMA
 #define BMO_INIT_RAND(Mat, rows, cols) Mat(rows, cols, arma::fill::randu)
 #endif
-/*------------------- Identity / Eye-------------------*/
+/*------------------- Identity -------------------*/
 #ifdef OPTIM_USE_EIGEN
 #define BMO_IDENTITY(Mat, rows, cols) Mat::Identity(rows, cols)
 #elif OPTIM_USE_ARMA
@@ -116,6 +116,12 @@
 #define BMO_INVERSE(X) (X).inverse()
 #elif OPTIM_USE_ARMA
 #define BMO_INVERSE(X) arma::inv(X)
+#endif
+/*-------------------- Sum --------------------*/
+#ifdef OPTIM_USE_EIGEN
+#define BMO_SUM(X) (X).array().sum()
+#elif OPTIM_USE_ARMA
+#define BMO_SUM(X) arma::accu(X)
 #endif
 /*------------------ Determinant ------------------*/
 #ifdef OPTIM_USE_EIGEN
