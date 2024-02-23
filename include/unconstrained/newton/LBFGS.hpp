@@ -61,21 +61,17 @@ namespace optim
                 prev_loss, cur_loss,
                 prev_g, cur_g);
             Storage<fp_t> sy;
-            {
-                // map mat to col, without memory allocation
-                MapCol<fp_t> BMO_INIT_MAP_COL(map_cx, cur_x, nk),
-                    BMO_INIT_MAP_COL(map_px, prev_x, nk),
-                    BMO_INIT_MAP_COL(map_cg, cur_g, nk),
-                    BMO_INIT_MAP_COL(map_pg, prev_g, nk);
-                // compute bb_step and update pho
-                sy.s = map_cx - map_px;
-                sy.y = map_cg - map_pg;
-                bb_step = BMO_DOT_PROD(sy.s, sy.y);
-                sy.rho = 1. / bb_step;
-                bb_step /= BMO_SQUARE_NORM(sy.y);
-                d = -map_cg;
-                memory.push_back(std::move(sy));
-            }
+            BMO_RESIZE(cur_x, nk, 1), BMO_RESIZE(prev_x, nk, 1);
+            BMO_RESIZE(cur_g, nk, 1), BMO_RESIZE(prev_g, nk, 1);
+            sy.s = cur_x - prev_x, sy.y = cur_g - prev_g;
+            // compute bb_step and update pho
+            bb_step = BMO_DOT_PROD(sy.s, sy.y);
+            sy.rho = 1. / bb_step;
+            bb_step /= BMO_SQUARE_NORM(sy.y);
+            d = -cur_g;
+            BMO_RESIZE(cur_x, n, k), BMO_RESIZE(prev_x, n, k);
+            BMO_RESIZE(cur_g, n, k), BMO_RESIZE(prev_g, n, k);
+            memory.push_back(std::move(sy));
             // update prev_x, prev_g, prev_loss and memory
             prev_x = std::move(cur_x);
             prev_g = std::move(cur_g);
@@ -92,53 +88,52 @@ namespace optim
                     prev_x, cur_x,
                     prev_loss, cur_loss,
                     prev_g, cur_g);
-                { // mapping may be expired, so we need to re-map
-                    MapCol<fp_t> BMO_INIT_MAP_COL(map_cx, cur_x, nk),
-                        BMO_INIT_MAP_COL(map_px, prev_x, nk),
-                        BMO_INIT_MAP_COL(map_cg, cur_g, nk),
-                        BMO_INIT_MAP_COL(map_pg, prev_g, nk);
-                    // compute bb_step1
-                    sy.s = map_cx - map_px;
-                    sy.y = map_cg - map_pg;
-                    const double sTy = BMO_MAT_DOT_PROD(sy.s, sy.y);
-                    const double y_nrm2 = BMO_SQUARE_NORM(sy.y);
-                    if (y_nrm2 < Constant::eps)
-                    { // too small to storage!
-                        d = -map_cg;
-                        bb_step = step;
-                        goto continue_main_loop;
-                    }
-                    if (sTy > 0) [[likely]]
-                    { // use bb step1 or step2
-                        bb_step = sTy / y_nrm2;
-                        // force bb_step to be in [min_step, max_step]
-                        bb_step = std::min(
-                            std::max(ls.min_step, bb_step), ls.max_step);
-                    }
-                    else [[unlikely]] // sTy == 0
-                        bb_step = step;
-                    sy.rho = 1. / sTy;
-                    // update -gradient to d
-                    d = -map_cg;
+                // mapping may be expired, so we need to re-map
+                BMO_RESIZE(cur_x, nk, 1), BMO_RESIZE(prev_x, nk, 1);
+                BMO_RESIZE(cur_g, nk, 1), BMO_RESIZE(prev_g, nk, 1);
+                sy.s = cur_x - prev_x, sy.y = cur_g - prev_g;
+                // compute bb_step1
+                const double sTy = BMO_MAT_DOT_PROD(sy.s, sy.y);
+                const double y_nrm2 = BMO_SQUARE_NORM(sy.y);
+                if (y_nrm2 < Constant::eps)
+                { // too small to storage!
+                    d = -cur_g;
+                    bb_step = step;
+                    goto continue_main_loop;
                 }
+                if (sTy > 0) [[likely]]
+                { // use bb step1 or step2
+                    bb_step = sTy / y_nrm2;
+                    // force bb_step to be in [min_step, max_step]
+                    bb_step = std::min(
+                        std::max(ls.min_step, bb_step), ls.max_step);
+                }
+                else [[unlikely]] // sTy == 0
+                    bb_step = step;
+                sy.rho = 1. / sTy;
+                // update -gradient to d
+                d = -cur_g;
                 // check stop criteria
-                g_nrm = BMO_NORM(cur_g);
-                x_diff_nrm = BMO_NORM(sy.s); // = norm(d) * step;
+                g_nrm = BMO_FRO_NORM(cur_g);
+                x_diff_nrm = BMO_FRO_NORM(sy.s); // = norm(d) * step;
                 f_diff = std::abs(cur_loss - prev_loss) /
                          std::abs(cur_loss);
                 if (g_nrm < gtol && x_diff_nrm < xtol && f_diff < ftol)
-                { // check stop criteria
+                { // check stop criteria and resize back
+                    BMO_RESIZE(cur_x, n, k);
                     status = 0;
                     break;
                 }
                 // update prev_x, prev_g, prev_loss and memory
                 memory.push_back(std::move(sy));
             continue_main_loop:
+                BMO_RESIZE(cur_x, n, k), BMO_RESIZE(prev_x, n, k);
+                BMO_RESIZE(cur_g, n, k), BMO_RESIZE(prev_g, n, k);
                 prev_x = std::move(cur_x);
                 prev_g = std::move(cur_g);
                 prev_loss = cur_loss;
             }
-            status = 1; // TODO: logger
+            status = 1; // TODO: log
             return cur_loss;
         };
     };
