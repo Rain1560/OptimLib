@@ -4,49 +4,29 @@
 namespace optim::internal::MTLineSearch
 {
     template <typename fp_t>
-    struct FuncVal
+    struct BaseFuncVal
     {
-        fp_t arg;       ///< argument
-        fp_t val;       ///< function value(loss at pos)
-        fp_t deriv;     ///< derivative = grad^T * direc
-        Mat<fp_t> pos;  ///< position
-        Mat<fp_t> grad; ///< gradient
+        fp_t arg;   ///< argument
+        fp_t val;   ///< function value(loss at pos)
+        fp_t deriv; ///< derivative = grad^T * direc
 
-        FuncVal(fp_t argument, size_t rows, size_t cols)
-            : arg(argument)
+        BaseFuncVal(
+            fp_t argument, fp_t value, fp_t derivative)
         {
-            BMO_RESIZE(this->pos, rows, cols);
-            BMO_RESIZE(this->grad, rows, cols);
+            this->arg = argument;
+            this->val = value;
+            this->deriv = derivative;
         };
 
-        void swap(FuncVal &other)
+        void swap(BaseFuncVal<fp_t> &other)
         {
             fp_t tmp;
-            // swap arg and val
-            tmp = this->arg;
-            this->arg = other.arg;
+            tmp = this->arg, this->arg = other.arg;
             other.arg = tmp;
-            tmp = this->val;
-            this->val = other.val;
+            tmp = this->val, this->val = other.val;
             other.val = tmp;
-            // swap pos, grad and deriv
-            BMO_SWAP(this->pos, other.pos);
-            BMO_SWAP(this->grad, other.grad);
-            tmp = this->deriv;
-            this->deriv = other.deriv;
+            tmp = this->deriv, this->deriv = other.deriv;
             other.deriv = tmp;
-        };
-
-        void update_val(
-            LineSearch<fp_t>::Problem *prob,
-            const Mat<fp_t> &x0,
-            const Mat<fp_t> &d,
-            const fp_t sgn_d)
-        { // arg update but val and grad not
-            this->pos = x0 + this->arg * sgn_d * d;
-            this->val = prob->loss(this->pos);
-            prob->grad(this->pos, this->grad);
-            this->deriv = BMO_MAT_DOT_PROD(this->grad, d) * sgn_d;
         };
 
         void phi_to_psi(const fp_t g_test)
@@ -62,11 +42,39 @@ namespace optim::internal::MTLineSearch
         };
     };
 
+    template <typename fp_t, bool use_prox = false>
+    struct FuncVal : public BaseFuncVal<fp_t>
+    {
+        FuncVal(
+            fp_t argument, fp_t value, fp_t derivative)
+            : BaseFuncVal<fp_t>(argument, value, derivative){};
+
+        void update_val(
+            LineSearch<fp_t, use_prox>::Problem *prob,
+            LineSearchArgs<fp_t, use_prox> &arg)
+        { // arg update but val and grad not
+            arg.step_forward(prob);
+            arg.update_loss(prob);
+            arg.update_grad(prob);
+            this->arg = arg.step;
+            this->val = arg.cur_loss;
+            if constexpr (use_prox)
+            {
+                arg.update_cur_gradmap(prob);
+                arg.tmp = arg.cur_x - arg.prev_x;
+                this->deriv = BMO_MAT_DOT_PROD(arg.cur_grad_map, arg.direction) /
+                              this->arg;
+            }
+            else
+                this->deriv = BMO_MAT_DOT_PROD(arg.cur_grad, arg.direction);
+        };
+    };
+
     // minimizer of the cubic function that interpolates f(a), f'(a), f(b), f'(b) within the given interval.
     template <typename fp_t>
     OPTIM_INLINE fp_t find_ac(
-        const FuncVal<fp_t> &f_a,
-        const FuncVal<fp_t> &f_b)
+        const BaseFuncVal<fp_t> &f_a,
+        const BaseFuncVal<fp_t> &f_b)
     {
         using std::abs;
         using std::max;
@@ -87,8 +95,8 @@ namespace optim::internal::MTLineSearch
     template <typename fp_t>
     OPTIM_INLINE fp_t
     find_ac(
-        const FuncVal<fp_t> &f_a,
-        const FuncVal<fp_t> &f_b,
+        const BaseFuncVal<fp_t> &f_a,
+        const BaseFuncVal<fp_t> &f_b,
         const fp_t step_min,
         const fp_t step_max)
     {
@@ -117,8 +125,8 @@ namespace optim::internal::MTLineSearch
     template <typename fp_t>
     OPTIM_INLINE fp_t
     find_aq(
-        const FuncVal<fp_t> &f_a,
-        const FuncVal<fp_t> &f_b)
+        const BaseFuncVal<fp_t> &f_a,
+        const BaseFuncVal<fp_t> &f_b)
     {
         return f_a.arg +
                fp_t(0.5) * f_a.deriv /
@@ -130,8 +138,8 @@ namespace optim::internal::MTLineSearch
     template <typename fp_t>
     OPTIM_INLINE fp_t
     find_as(
-        const FuncVal<fp_t> &f_a,
-        const FuncVal<fp_t> &f_b)
+        const BaseFuncVal<fp_t> &f_a,
+        const BaseFuncVal<fp_t> &f_b)
     {
         return f_a.arg +
                f_a.deriv /
@@ -139,13 +147,13 @@ namespace optim::internal::MTLineSearch
                    (f_b.arg - f_a.arg);
     }
 
-    template <typename fp_t>
+    template <typename fp_t, bool use_prox = false>
     OPTIM_INLINE fp_t
     select_trial_value(
         bool &brackt,
-        const FuncVal<fp_t> &f_l,
-        const FuncVal<fp_t> &f_u,
-        const FuncVal<fp_t> &f_t,
+        const BaseFuncVal<fp_t> &f_l,
+        const BaseFuncVal<fp_t> &f_u,
+        const BaseFuncVal<fp_t> &f_t,
         const fp_t step_min,
         const fp_t step_max)
     {

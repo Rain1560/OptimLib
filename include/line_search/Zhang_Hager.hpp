@@ -11,6 +11,7 @@
 namespace optim
 {
     /// @brief Zhang-Hager line search
+    /// @details find a step \[\alpha_k\] such that \[f(x_k + \alpha_k d) \leq C_k + \rho \alpha_k \nabla f(x_k)^T d\], where \[C_k = \frac{\gamma_k p_k C_{k-1} + f(x_k)}{\gamma_k + 1}, C_0 = f(x_)\].
     template <typename fp_t = double,
               bool use_prox = false>
     class ZHLineSearch final
@@ -61,7 +62,7 @@ namespace optim
                 arg.update_loss(this->prob);
                 if constexpr (use_prox)
                 {
-                    arg.update_prev_subgrad(this->prob);
+                    arg.update_prev_gradmap(this->prob);
                     arg.tmp = arg.cur_x - arg.prev_x;
                     dTg = BMO_MAT_DOT_PROD(
                               arg.tmp, arg.prev_grad_map) /

@@ -112,11 +112,19 @@ namespace optim
         }
 
         OPTIM_STRONG_INLINE void
-        update_prev_subgrad(Problem *prob)
+        update_prev_gradmap(Problem *prob)
         {
             prev_grad_map = prev_x - step * prev_grad;
             prob->prox(step, prev_grad_map, tmp);
             prev_grad_map = (prev_x - tmp) / step;
+        }
+
+        OPTIM_STRONG_INLINE void
+        update_cur_gradmap(Problem *prob)
+        {
+            cur_grad_map = cur_x - step * cur_grad;
+            prob->prox(step, cur_grad_map, tmp);
+            cur_grad_map = (cur_x - tmp) / step;
         }
 
         OPTIM_STRONG_INLINE void
@@ -157,6 +165,7 @@ namespace optim
         virtual void line_search(Args &arg)
         {
             arg.step_forward(prob);
+            arg.update_grad(prob);
         }
 
         virtual ~LineSearch() = default;
