@@ -64,13 +64,13 @@ namespace optim
             fp_t g_0, g_t; // = grad_0.T * d;
             // check wolfe condition
             arg.step_forward(this->prob);
-            arg.update_loss(this->prob);
-            arg.update_grad(this->prob);
+            arg.update_cur_loss(this->prob);
+            arg.update_cur_grad(this->prob);
             // update subgradient if needed
             if constexpr (use_prox)
             {
-                arg.update_prev_gradmap(this->prob);
-                arg.update_cur_gradmap(this->prob);
+                arg.update_prev_grad_map(this->prob);
+                arg.update_cur_grad_map(this->prob);
                 arg.tmp = arg.cur_x - arg.prev_x;
                 g_0 = BMO_MAT_DOT_PROD(arg.prev_grad_map, arg.tmp) /
                       arg.step;
@@ -132,8 +132,8 @@ namespace optim
                         // a_t and a_l should be endpoints
                         a_u.swap(a_l);
                     a_l.swap(a_t); // case U2 & b
-                    best_x = std::move(arg.cur_x);
-                    best_grad = std::move(arg.cur_grad);
+                    BMO_SWAP(best_x, arg.cur_x);
+                    BMO_SWAP(best_grad, arg.cur_grad);
                     if constexpr (use_prox)
                         best_gmap = std::move(arg.cur_grad_map);
                 }
@@ -197,7 +197,7 @@ namespace optim
             arg.cur_x = std::move(best_x);
             arg.cur_grad = std::move(best_grad);
             if constexpr (use_prox)
-                arg.cur_grad_map = std::move(best_gmap);
+                arg.prev_grad_map = std::move(best_gmap);
         }
 
         bool success() const override { return status == 0; }

@@ -48,7 +48,7 @@ namespace optim
             this->Cval = arg.cur_loss;
         }
 
-        /// @brief 
+        /// @brief
         void line_search(Args &arg) override
         {
             optim_assert(arg.step > 0, "step must be positive.");
@@ -59,10 +59,10 @@ namespace optim
             for (iter = 1; iter <= max_iter; iter++)
             {
                 arg.step_forward(this->prob);
-                arg.update_loss(this->prob);
+                arg.update_cur_loss(this->prob);
                 if constexpr (use_prox)
                 {
-                    arg.update_prev_gradmap(this->prob);
+                    arg.update_prev_grad_map(this->prob);
                     arg.tmp = arg.cur_x - arg.prev_x;
                     dTg = BMO_MAT_DOT_PROD(
                               arg.tmp, arg.prev_grad_map) /
@@ -74,11 +74,10 @@ namespace optim
                 if (arg.cur_loss <= Cval - pho * arg.step * dTg ||
                     arg.step == this->min_step)
                 {
-                    arg.update_grad(this->prob);
                     // update pQ, Q, Cval
                     pQ = Q, Q = gamma * Q + 1;
                     Cval = (gamma * pQ * Cval + arg.cur_loss) / Q;
-                    return;
+                    goto over;
                 }
                 arg.step *= decay_rate;
                 // force step larger than min_step
@@ -89,9 +88,9 @@ namespace optim
             // and give a warning(TODO)
             arg.step = this->min_step;
             arg.step_forward(this->prob);
-            arg.update_loss(this->prob);
-            arg.update_grad(this->prob);
-            return;
+            arg.update_cur_loss(this->prob);
+        over:
+            arg.update_cur_grad(this->prob);
         };
 
         bool success() const override

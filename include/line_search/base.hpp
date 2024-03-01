@@ -21,8 +21,8 @@ namespace optim
 
         LineSearchArgs(Mat<fp_t> &x)
         {
-            const int n = BMO_ROWS(x),
-                      m = BMO_COLS(x);
+            const Index n = BMO_ROWS(x),
+                        m = BMO_COLS(x);
             cur_x = x;
             BMO_RESIZE(prev_x, n, m);
             BMO_RESIZE(prev_grad, n, m);
@@ -37,13 +37,13 @@ namespace optim
         }
 
         OPTIM_STRONG_INLINE
-        void update_loss(Problem *prob)
+        void update_cur_loss(Problem *prob)
         {
             cur_loss = prob->loss(cur_x);
         }
 
         OPTIM_STRONG_INLINE
-        void update_grad(Problem *prob)
+        void update_cur_grad(Problem *prob)
         {
             prob->grad(cur_x, cur_grad);
         }
@@ -51,8 +51,8 @@ namespace optim
         OPTIM_STRONG_INLINE
         void flush()
         {
-            prev_x = std::move(cur_x);
-            prev_grad = std::move(cur_grad);
+            BMO_SWAP(prev_x, cur_x);
+            BMO_SWAP(prev_grad, cur_grad);
             prev_loss = cur_loss;
         }
     };
@@ -74,8 +74,8 @@ namespace optim
     public:
         LineSearchArgs(Mat<fp_t> &x)
         {
-            const int n = BMO_ROWS(x),
-                      m = BMO_COLS(x);
+            const Index n = BMO_ROWS(x),
+                        m = BMO_COLS(x);
             cur_x = x;
             BMO_RESIZE(prev_x, n, m);
             BMO_RESIZE(prev_grad, n, m);
@@ -91,11 +91,11 @@ namespace optim
         {
             cur_x = prev_x + step * direction;
             prob->prox(step, cur_x, tmp);
-            cur_x = std::move(tmp);
+            BMO_SWAP(cur_x, tmp);
         }
 
         OPTIM_STRONG_INLINE void
-        update_loss(Problem *prob)
+        update_cur_loss(Problem *prob)
         {
             cur_sm_loss = prob->sm_loss(cur_x);
             cur_nsm_loss = prob->nsm_loss(cur_x);
@@ -103,7 +103,7 @@ namespace optim
         }
 
         OPTIM_STRONG_INLINE void
-        update_grad(Problem *prob)
+        update_cur_grad(Problem *prob)
         {
             prob->grad(cur_x, cur_grad);
             cur_grad_map = cur_x - cur_grad;
@@ -112,7 +112,7 @@ namespace optim
         }
 
         OPTIM_STRONG_INLINE void
-        update_prev_gradmap(Problem *prob)
+        update_prev_grad_map(Problem *prob)
         {
             prev_grad_map = prev_x - step * prev_grad;
             prob->prox(step, prev_grad_map, tmp);
@@ -120,7 +120,7 @@ namespace optim
         }
 
         OPTIM_STRONG_INLINE void
-        update_cur_gradmap(Problem *prob)
+        update_cur_grad_map(Problem *prob)
         {
             cur_grad_map = cur_x - step * cur_grad;
             prob->prox(step, cur_grad_map, tmp);
@@ -130,9 +130,9 @@ namespace optim
         OPTIM_STRONG_INLINE void
         flush()
         {
-            prev_x = std::move(cur_x);
-            prev_grad = std::move(cur_grad);
-            prev_grad_map = std::move(cur_grad_map);
+            BMO_SWAP(prev_x, cur_x);
+            BMO_SWAP(prev_grad, cur_grad);
+            BMO_SWAP(prev_grad_map, cur_grad_map);
             prev_sm_loss = cur_sm_loss;
             prev_nsm_loss = cur_nsm_loss;
             prev_loss = cur_loss;
@@ -165,7 +165,7 @@ namespace optim
         virtual void line_search(Args &arg)
         {
             arg.step_forward(prob);
-            arg.update_grad(prob);
+            arg.update_cur_grad(prob);
         }
 
         virtual ~LineSearch() = default;

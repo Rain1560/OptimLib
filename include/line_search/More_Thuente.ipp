@@ -54,13 +54,13 @@ namespace optim::internal::MTLineSearch
             LineSearchArgs<fp_t, use_prox> &arg)
         { // arg update but val and grad not
             arg.step_forward(prob);
-            arg.update_loss(prob);
-            arg.update_grad(prob);
+            arg.update_cur_loss(prob);
+            arg.update_cur_grad(prob);
             this->arg = arg.step;
             this->val = arg.cur_loss;
             if constexpr (use_prox)
             {
-                arg.update_cur_gradmap(prob);
+                arg.update_cur_grad_map(prob);
                 arg.tmp = arg.cur_x - arg.prev_x;
                 this->deriv = BMO_MAT_DOT_PROD(arg.cur_grad_map, arg.direction) /
                               this->arg;
