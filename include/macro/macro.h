@@ -15,6 +15,14 @@
 #define OPTIM_STRONG_INLINE
 #endif
 
+#if __cplusplus >= 202002L
+#define OPTIM_LIKELY [[likely]]
+#define OPTIM_UNLIKELY [[unlikely]]
+#else
+#define OPTIM_LIKELY
+#define OPTIM_UNLIKELY
+#endif
+
 #ifdef OPTIM_USE_EIGEN
 #include <Eigen/Eigen>
 #elif OPTIM_USE_ARMA
@@ -25,22 +33,6 @@
 
 namespace optim
 {
-    // #ifndef OPTIM_FLOAT_TYPE
-    //     using fp_t = double;
-    // #else
-    //     static_assert(std::is_floating_point<OPTIM_FLOAT_TYPE>::value,
-    //                   "OPTIM_FLOAT_TYPE must be a floating point type.");
-    //     using fp_t = OPTIM_FLOAT_TYPE;
-    // #endif
-    //     // 1e-8 for float, 1e-22 for double
-    //     constexpr const fp_t eps = std::numeric_limits<fp_t>::epsilon();
-    //     // when norm close to sqrt_eps, it should be stop.
-    //     constexpr const fp_t sqrt_eps = std::sqrt(eps);
-    //     constexpr const fp_t inf = std::numeric_limits<fp_t>::infinity();
-    //     constexpr const fp_t nan = std::numeric_limits<fp_t>::quiet_NaN();
-
-    // #define OPTIM_SMALL_NUM 1e-6
-
 #if defined(OPTIM_USE_EIGEN)
     using Index = Eigen::Index;
     template <typename fp_t> //= double
@@ -58,11 +50,17 @@ namespace optim
 #elif defined(OPTIM_USE_ARMA)
     // TODO: using template alias
     using Index = arma::uword;
+    template <typename fp_t>
     using Mat = arma::Mat<fp_t>;
+    template <typename fp_t>
     using Row = arma::Row<fp_t>;
+    template <typename fp_t>
     using Col = arma::Col<fp_t>;
+    template <typename fp_t>
     using MapCol = arma::Col<fp_t>;
+    template <typename fp_t>
     using MapRow = arma::Row<fp_t>;
+    template <typename fp_t>
     using MapMat = arma::Mat<fp_t>;
 #endif
 };

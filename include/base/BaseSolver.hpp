@@ -18,6 +18,7 @@ namespace optim
     public:
         int n_iter() const { return iter; };
         virtual fp_t solve(Mat<fp_t> &) = 0;
+        virtual ~BaseSolver(){};
     };
 };
 

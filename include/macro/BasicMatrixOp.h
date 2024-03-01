@@ -113,8 +113,10 @@
 #endif
 /*------------------ Inverse ------------------*/
 #ifdef OPTIM_USE_EIGEN
+#define BMO_LDLT_SOLVE(X, Y) (X).ldlt().solve(Y)
 #define BMO_INVERSE(X) (X).inverse()
 #elif OPTIM_USE_ARMA
+#define BMO_LDLT_SOLVE(X, Y) arma::solve(X, Y, arma::solve_opts::fast)
 #define BMO_INVERSE(X) arma::inv(X)
 #endif
 /*-------------------- Sum --------------------*/
@@ -122,6 +124,18 @@
 #define BMO_SUM(X) (X).array().sum()
 #elif OPTIM_USE_ARMA
 #define BMO_SUM(X) arma::accu(X)
+#endif
+/*------------------ Abs ------------------*/
+#ifdef OPTIM_USE_EIGEN
+#define BMO_ABS(X) (X).array().abs().matrix()
+#elif OPTIM_USE_ARMA
+#define BMO_ABS(X) arma::abs(X)
+#endif
+/*------------------ Sign ------------------*/
+#ifdef OPTIM_USE_EIGEN
+#define BMO_SIGN(X) (X).array().sign()
+#elif OPTIM_USE_ARMA
+#define BMO_SIGN(X) arma::sign(X)
 #endif
 /*------------------ Determinant ------------------*/
 #ifdef OPTIM_USE_EIGEN
@@ -148,9 +162,8 @@
 #endif
 /*------------------(Frob) Norm ------------------*/
 #ifdef OPTIM_USE_EIGEN
-#define BMO_NORM(X) (X).norm()
+#define BMO_FRO_NORM(X) (X).norm()
 #elif OPTIM_USE_ARMA
-#define BMO_NORM(X) arma::norm(X)
+#define BMO_FRO_NORM(X) arma::norm(X)
 #endif
-
 #endif
