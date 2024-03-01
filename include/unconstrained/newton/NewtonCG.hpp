@@ -42,11 +42,13 @@ namespace optim
             const int n = BMO_ROWS(x),
                       k = BMO_COLS(x),
                       nk = n * k;
-            if (cg_max_iter < 0 || cg_max_iter > n)
-                cg_max_iter = nk;
             Mat<fp_t> H(nk, nk);
             LineSearchArgs<fp_t, false> arg(x);
             fp_t f_diff, x_diff_nrm, g_nrm;
+            cgParams<fp_t> cg_arg;
+            if (cg_max_iter < 0 || cg_max_iter > nk)
+                cg_arg.max_iter = nk;
+            cg_arg.tol = gtol;
             arg.update_cur_loss(prob);
             arg.update_cur_grad(prob);
             ls->init(prob, arg);
