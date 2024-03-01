@@ -34,7 +34,7 @@ namespace optim
     private:
         OPTIM_STRONG_INLINE void
         // assign gradient to direction
-        update_direction(LineSearchArgs<fp_t, use_prox> &arg)
+        update_direction(LineSearchArgs<fp_t, false> &arg)
         {
             arg.direction = -arg.cur_grad;
         }
@@ -42,7 +42,7 @@ namespace optim
         OPTIM_INLINE void
         update_sy(
             Storage &sy,
-            LineSearchArgs<fp_t, use_prox> &arg)
+            LineSearchArgs<fp_t, false> &arg)
         {
             sy.s = arg.cur_x - arg.prev_x;
             sy.y = arg.cur_grad - arg.prev_grad;
@@ -75,10 +75,10 @@ namespace optim
         {
             CircularArray<Storage> memory(m);
             Storage sy;
-            LineSearchArgs<fp_t, use_prox> arg(x);
+            LineSearchArgs<fp_t, false> arg(x);
             fp_t g_nrm, x_diff_nrm, f_diff;
-            arg.update_loss(this->prob);
-            arg.update_grad(this->prob);
+            arg.update_cur_loss(this->prob);
+            arg.update_cur_grad(this->prob);
             ls->init(this->prob, arg);
             arg.step = step;
             // make step 0
