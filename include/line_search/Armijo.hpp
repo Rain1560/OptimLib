@@ -3,6 +3,16 @@
 
 #include "base.hpp"
 
+/**
+ * \page ArmijoLineSearch Armijo Line Search
+ * \par 
+ * Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: \f$ f(x_k + \alpha_k d) \leq f(x_k) + c_1 \alpha_k \nabla f(x_k)^T d \f$.
+ * \par
+ * The back tracking algorithm is described as follows:
+ * 1. check if Armijo condition is satisfied, if not, reduce the step size by a decay rate.
+ * 2. repeat step 1 until the condition is satisfied or the maximum number of iterations is reached.
+ */
+
 namespace optim
 {
     template <typename fp_t, bool use_prox = false>

@@ -3,15 +3,17 @@
 #define _OPTIM_ZHANG_HAGER_HPP_
 
 /**
-
-*/
+ * \page ZHLineSearch Zhang-Hager Line Search
+ * \par
+ * Zhang-Hager line search is a non-monotone line search algorithm that satisfies the following condition: \f$ f(x_k + \alpha_k d) \leq C_k + \rho \alpha_k \nabla f(x_k)^T d \f$, where \f$ C_k = \frac{\gamma_k Q_{k-1}C_{k-1} + f(x_k)}{Q_k} \f$, \f$ C_0 = f(x_0) \f$.
+ */
 
 #include "base.hpp"
 
 namespace optim
 {
     /// @brief Zhang-Hager line search
-    /// @details find a step \[\alpha_k\] such that \[f(x_k + \alpha_k d) \leq C_k + \rho \alpha_k \nabla f(x_k)^T d\], where \[C_k = \frac{\gamma_k p_k C_{k-1} + f(x_k)}{\gamma_k + 1}, C_0 = f(x_)\].
+    /// @details find a step \[\alpha_k\] such that \f$ f(x_k + \alpha_k d) \leq C_k + \rho \alpha_k \nabla f(x_k)^T d \f$, where \f$ C_k = \frac{\gamma_k Q_{k-1}C_{k-1} + f(x_k)}{Q_k} \f$, \f$ C_0 = f(x_0) \f$.
     template <typename fp_t = double,
               bool use_prox = false>
     class ZHLineSearch final

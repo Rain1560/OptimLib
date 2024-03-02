@@ -4,12 +4,39 @@
 
 #include "More_Thuente.ipp"
 
+/**
+ * \page MTLineSearch
+ * \par
+ * The More-Thuente line search algorithm is a line search algorithm that satisfies the strong Wolfe conditions: 
+ * 
+ * \f{align*}
+ * f(x_k + \alpha_k d) &\leq f(x_k) + c_1 \alpha_k \nabla f(x_k)^T d \\
+ * |\nabla f(x_k + \alpha_k d)^T d| &\leq c_2 |\nabla f(x_k)^T d| \\
+ * c_1 \in (0, \frac{1}{2}) &\quad c_2 \in (0, 1)
+ * \f}
+ * 
+ * \par 
+ * Note that \f$ c_1 \f$ should be close to 0 and \f$ c_2 \f$ should be close to 1. Otherwise it will be hard to find a step that satisfies the conditions.
+ * \par 
+ * The algorithm step is computed by the following steps:
+ * \par
+ * Denote \f$ \alpha_l, \alpha_u, \alpha_t \f$ and there corresponding function values and derivatives as \f$ f_l, f_u, f_t, g_l, g_u, g_t \f$. After step 4 below, we ensure that \f$ f_l \leq f_u \f$. When the bracket is true, the minimum of \f$ \phi \f$ is guaranteed to be within the interval \f$ [\alpha_l, \alpha_u] \f$.
+ * 1. check if the current step satisfies the strong Wolfe conditions. If it does, update loss and gradient then return.
+ * 2. If not, let \f$ \alpha_l = \alpha_u = 0, \alpha_t = t_k \f$ and `auxiliary = true`. Initialize the interval of uncertainty.
+ * 3. select a trial value base on \f$ \alpha_l, \alpha_u, \alpha_t \f$ and their corresponding function values and derivatives. We force the step to be within the interval.
+ * 4. use \f$ \alpha_t \f$ to update \f$ \alpha_l, \alpha_u\f$.
+ * 5. check if \f$ \alpha_l \f$ satisfies the strong Wolfe conditions.
+ * 6. let \f$ \alpha_t \f$ be the new trial step and update the function value and derivative.
+ * 7. check if we should switch to "Modified Updating Method" and if bracket is true.
+ * 8. update the interval of uncertainty, go to step 3.
+*/
+
 namespace optim
 {
-    /*!
-     @class LinearSearchMT
-     @brief More-Thuente line search
-     */
+    /// @brief More-Thuente line search algorithm
+    /// @details Find a step \(t_k\) that satisfies the strong Wolfe conditions: \(f(x_k + t_k d) \leq f(x_k) + c_1 t_k \nabla f(x_k)^T d\) and \(|\nabla f(x + t_k d)^T d| \leq c_2 |\nabla f(x)^T d|\), where \(c_1 \in (0, 0.5)\) and \(c_2 \in (0, 1)\). Note that \(c_1\) should be close to 0 and \(c_2\) should be close to 1. Otherwise it will be hard to find a step that satisfies the conditions.
+    /// @tparam fp_t floating-point type
+    /// @tparam use_prox whether to use proximal operator
     template <typename fp_t = double,
               bool use_prox = false>
     class MTLineSearch final
@@ -19,6 +46,7 @@ namespace optim
 
     public:
         using Problem = typename LineSearch<fp_t>::Problem;
+        using Constant = OptimConst<fp_t>;
         using Args = LineSearchArgs<fp_t, use_prox>;
 
     private:
@@ -28,7 +56,6 @@ namespace optim
         int max_iter = 10;
         fp_t wolfe_c1 = 1e-3;
         fp_t wolfe_c2 = 0.9;
-        fp_t tol = 1e-4;
 
     private:
         int status = 0; // wether ls success
@@ -146,18 +173,19 @@ namespace optim
                 // update the 'interval of uncertainty'
                 if (brackt)
                 {
-                    if (abs(a_u.arg - a_l.arg) > 0.66 * width_old) [[unlikely]]
+                    if (abs(a_u.arg - a_l.arg) > 0.66 * width_old)
                         // Decide if a bisection step is needed.
                         arg.step = (a_l.arg + a_u.arg) / 2;
                     width_old = width;
                     width = abs(a_u.arg - a_l.arg);
-                    if (step_max < tol) [[unlikely]]
-                    { // minimal is too close to origin point!
-                        optim_assert(a_l.val <= arg.prev_loss,
-                                     "f_t should be less than f_0. Please check your loss and grad func.");
-                        status = -1;
-                        goto over;
-                    }
+                    if (step_max < Constant::sqrt_eps)
+                        OPTIM_UNLIKELY
+                        { // minimal is too close to origin point!
+                            optim_assert(a_l.val <= arg.prev_loss,
+                                         "f_t should be less than f_0. Please check your loss and grad func.");
+                            status = -1;
+                            goto over;
+                        }
                     step_max = max(a_l.arg, a_u.arg);
                     step_min = min(a_l.arg, a_u.arg);
                     if ((arg.step > step_max || arg.step < step_min) ||

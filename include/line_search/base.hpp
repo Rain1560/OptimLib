@@ -4,6 +4,21 @@
 
 #include "base/BaseSolver.hpp"
 
+/**
+ * \page line_search Line Search
+ * \par
+ * Below Line Search algorithms are trying to find a step \f$ t_k \f$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant. 
+ * \par
+ * We define 2 line search functions: \f$ \phi(\alpha) = f(x + \alpha d) \f$ and auxiliary function \f$ \psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi'(0) \f$.
+ * 
+ * # Armijo Line Search
+ * \copydoc ArmijoLineSearch
+ * # Zhang-Hager Line Search
+ * \copydoc ZHLineSearch
+ * # More-Thuente Line Search
+ * \copydoc MTLineSearch
+ */
+
 namespace optim
 {
     /// @cond
@@ -184,8 +199,7 @@ namespace optim
     /// @details step forward without any line search.
     /// @tparam fp_t floating-point type
     /// @tparam use_prox whether to use proximal operator
-    template <typename fp_t,
-              bool use_prox = false>
+    template <typename fp_t, bool use_prox = false>
     struct LineSearch
     {
         using Problem = ProxWrapper<
@@ -213,7 +227,7 @@ namespace optim
         }
 
         /// @brief line search with the given arguments
-        /// @details all LineSearch classes will using previous loss and grad to find the proper step which meats different requirements. After finishing line search, it will update current loss and gradient at the new point.
+        /// @details All LineSearch classes will using previous loss and grad to find the proper step which meats different requirements. After finishing line search, it will update current loss and gradient at the new point.
         /// @param arg Line Search arguments
         virtual void line_search(Args &arg)
         {
