@@ -4,3 +4,9 @@
 [submodule "armadillo"]
 	path = armadillo
 	url = https://github.com/dendisuhubdy/armadillo.git
+[submodule "doxygen-awesome-css"]
+	path = doc/doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git
+[submodule "eigen3"]
+	path = eigen3
+	url = https://gitlab.com/libeigen/eigen.git

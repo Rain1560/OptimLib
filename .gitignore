@@ -1,6 +1,8 @@
-eigen3
-armadillo
 .vscode
 bin
 lib
 build
+hw
+src
+doc/html
+doc/latex
