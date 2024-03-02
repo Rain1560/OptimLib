@@ -59,7 +59,7 @@ namespace optim
                 BMO_RESIZE(arg.direction, nk, 1);
                 BMO_RESIZE(arg.prev_grad, nk, 1);
                 // solve H * d = -g
-                cg(H, arg.prev_grad, arg.direction, cg_max_iter, gtol);
+                cg(H, arg.prev_grad, arg.direction, cg_arg);
                 BMO_RESIZE(arg.direction, n, k);
                 BMO_RESIZE(arg.prev_grad, n, k);
                 arg.step = 1.;

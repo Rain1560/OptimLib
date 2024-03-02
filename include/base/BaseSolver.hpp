@@ -16,8 +16,10 @@ namespace optim
         int iter;
 
     public:
+        /// @brief number of iterations
         int n_iter() const { return iter; };
-        virtual fp_t solve(Mat<fp_t> &) = 0;
+        /// @brief solve the problem with the given initial point x
+        virtual fp_t solve(Mat<fp_t> &x) = 0;
         virtual ~BaseSolver(){};
     };
 };

@@ -45,17 +45,32 @@ namespace optim
             fp_t g_nrm, diff_x_nrm, diff_abs_f;
             // first step
             args.step = this->step;
-            args.update_loss(prob);
-            args.update_grad(prob);
+            args.update_cur_loss(prob);
+            args.update_cur_grad(prob);
             args.direction = -args.cur_grad;
             ls->init(prob, args);
             args.flush(); // move cur to prev
             ls->line_search(args);
-            // init s and y
-            s = args.cur_x - args.prev_x;
-            y = args.cur_grad - args.prev_grad;
             for (iter = 1; iter <= max_iter; iter++)
             {
+                // update s and y
+                s = args.cur_x - args.prev_x;
+                y = args.cur_grad - args.prev_grad;
+                diff_x_nrm = BMO_FRO_NORM(s);
+                if constexpr (use_prox)
+                {
+                    args.update_cur_grad_map(prob);
+                    g_nrm = BMO_FRO_NORM(args.cur_grad_map);
+                }
+                else
+                    g_nrm = BMO_FRO_NORM(args.cur_grad);
+                // check stop criteria
+                diff_abs_f = std::abs(args.cur_loss - args.prev_loss) /
+                             (std::abs(args.prev_loss) + 1.);
+                if ((diff_x_nrm < xtol &&
+                     diff_abs_f < ftol) ||
+                    g_nrm < gtol)
+                    goto success_end;
                 const double sTy = std::abs(BMO_MAT_DOT_PROD(s, y));
                 if (sTy > 0)
                 { // use bb step1 or step2
@@ -74,26 +89,11 @@ namespace optim
                 args.flush();
                 // (Zhang & Hager) line search
                 ls->line_search(args);
-                // update s and y
-                s = args.cur_x - args.prev_x;
-                y = args.cur_grad - args.prev_grad;
-                diff_x_nrm = BMO_FRO_NORM(s);
-                if constexpr (use_prox)
-                    g_nrm = diff_x_nrm / args.step;
-                else
-                    g_nrm = BMO_FRO_NORM(args.cur_grad);
-                // check stop criteria
-                diff_abs_f = std::abs(args.cur_loss - args.prev_loss) /
-                             (std::abs(args.prev_loss) + 1.);
                 if (iter % 5 == 0)
                     logger.info("[BB] iter: {:<5d}| loss: {:<16g}| bb_step: {:<10g}\n|g_nrm: {:<12g}| diff_x_nrm: {:<10g}| diff_abs_f: {:<10g}",
                                 iter, args.cur_loss, args.step, g_nrm, diff_x_nrm, diff_abs_f);
                 else
                     logger.trace("[BB] iter: {:<5d}| loss: {:<16g}| bb_step: {:<10g}\n|g_nrm: {:<12g}| diff_x_nrm: {:<10g}| diff_abs_f: {:<10g}", iter, args.cur_loss, args.step, g_nrm, diff_x_nrm, diff_abs_f);
-                if ((diff_x_nrm < xtol &&
-                     diff_abs_f < ftol) ||
-                    g_nrm < gtol)
-                    goto success_end;
             }
             if (diff_x_nrm < xtol)
             {

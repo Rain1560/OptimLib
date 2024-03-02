@@ -6,19 +6,33 @@
 
 namespace optim
 {
-    template <typename, bool>
+    /// @cond
+    template <typename fp_t, bool use_prox>
     struct LineSearchArgs;
+    /// @endcond
 
+    /// @brief Line search arguments
+    /// @tparam fp_t floating-point type
     template <typename fp_t>
     struct LineSearchArgs<fp_t, false>
     {
         using Problem = GradProblem<fp_t>;
 
-        fp_t step, prev_loss, cur_loss;
-        Mat<fp_t> direction;
-        Mat<fp_t> prev_x, cur_x;
-        Mat<fp_t> prev_grad, cur_grad;
+        fp_t step; ///< step size
 
+        fp_t prev_loss; ///< previous loss
+        fp_t cur_loss;  ///< current loss
+
+        Mat<fp_t> direction; ///< step direction
+
+        Mat<fp_t> prev_x; ///< previous point
+        Mat<fp_t> cur_x;  ///< current point
+
+        Mat<fp_t> prev_grad; ///< previous gradient
+        Mat<fp_t> cur_grad;  ///< current gradient
+
+        /// @brief  malloc the memory for the line search arguments and assign x to the current point
+        /// @param x initial point
         LineSearchArgs(Mat<fp_t> &x)
         {
             const Index n = BMO_ROWS(x),
@@ -30,24 +44,28 @@ namespace optim
             BMO_RESIZE(direction, n, m);
         }
 
+        /// @brief Step forward to the next point
         OPTIM_STRONG_INLINE
         void step_forward(Problem *)
         {
             cur_x = prev_x + step * direction;
         }
 
+        /// @brief Update the current loss
         OPTIM_STRONG_INLINE
         void update_cur_loss(Problem *prob)
         {
             cur_loss = prob->loss(cur_x);
         }
 
+        /// @brief Update the current gradient
         OPTIM_STRONG_INLINE
         void update_cur_grad(Problem *prob)
         {
             prob->grad(cur_x, cur_grad);
         }
 
+        /// @brief Flush the current state to the previous state
         OPTIM_STRONG_INLINE
         void flush()
         {
@@ -62,16 +80,33 @@ namespace optim
     {
         using Problem = internal::ProxOperator<fp_t, GradProblem>;
 
-        fp_t step, prev_loss, cur_loss;
-        Mat<fp_t> direction;
-        Mat<fp_t> prev_x, cur_x;
-        Mat<fp_t> prev_grad, cur_grad;
-        Mat<fp_t> prev_grad_map, cur_grad_map;
-        fp_t prev_sm_loss, prev_nsm_loss;
-        fp_t cur_sm_loss, cur_nsm_loss;
-        Mat<fp_t> tmp; // storage tmp value
+        fp_t step; ///< step size
+
+        fp_t prev_loss; ///< previous loss
+        fp_t cur_loss;  ///< current loss
+
+        Mat<fp_t> direction; ///< step direction
+
+        Mat<fp_t> prev_x; ///< previous point
+        Mat<fp_t> cur_x;  ///< current point
+
+        Mat<fp_t> prev_grad; ///< previous gradient
+        Mat<fp_t> cur_grad;  ///< current gradient
+
+        Mat<fp_t> prev_grad_map; ///< previous gradient mapping
+        Mat<fp_t> cur_grad_map;  ///< current gradient mapping
+
+        fp_t prev_sm_loss;  ///< previous smooth loss
+        fp_t prev_nsm_loss; ///< previous non-smooth loss
+
+        fp_t cur_sm_loss;  ///< current smooth loss
+        fp_t cur_nsm_loss; ///< current non-smooth loss
+
+        Mat<fp_t> tmp; ///< storage tmp value
 
     public:
+        /// @brief malloc the memory for the line search arguments and assign x to the current point
+        /// @param x initial point
         LineSearchArgs(Mat<fp_t> &x)
         {
             const Index n = BMO_ROWS(x),
@@ -86,6 +121,7 @@ namespace optim
             BMO_RESIZE(tmp, n, m);
         }
 
+        /// @brief  Step forward to the next point
         OPTIM_STRONG_INLINE void
         step_forward(Problem *prob)
         {
@@ -94,6 +130,7 @@ namespace optim
             BMO_SWAP(cur_x, tmp);
         }
 
+        /// @brief Update the current loss
         OPTIM_STRONG_INLINE void
         update_cur_loss(Problem *prob)
         {
@@ -102,6 +139,7 @@ namespace optim
             cur_loss = cur_sm_loss + cur_nsm_loss;
         }
 
+        /// @brief Update the current gradient
         OPTIM_STRONG_INLINE void
         update_cur_grad(Problem *prob)
         {
@@ -111,6 +149,7 @@ namespace optim
             cur_grad_map = (cur_x - tmp) / step;
         }
 
+        /// @brief Update the previous gradient mapping
         OPTIM_STRONG_INLINE void
         update_prev_grad_map(Problem *prob)
         {
@@ -119,6 +158,7 @@ namespace optim
             prev_grad_map = (prev_x - tmp) / step;
         }
 
+        /// @brief Update the current gradient mapping
         OPTIM_STRONG_INLINE void
         update_cur_grad_map(Problem *prob)
         {
@@ -127,6 +167,7 @@ namespace optim
             cur_grad_map = (cur_x - tmp) / step;
         }
 
+        /// @brief Flush the current state to the previous state
         OPTIM_STRONG_INLINE void
         flush()
         {
@@ -139,6 +180,10 @@ namespace optim
         }
     };
 
+    /// @brief  Line search base class
+    /// @details step forward without any line search.
+    /// @tparam fp_t floating-point type
+    /// @tparam use_prox whether to use proximal operator
     template <typename fp_t,
               bool use_prox = false>
     struct LineSearch
@@ -152,16 +197,24 @@ namespace optim
         Problem *prob;
 
     public:
-        fp_t min_step = Constant::sqrt_eps;
-        fp_t max_step = fp_t(1e2);
+        fp_t min_step = Constant::sqrt_eps; ///< minimum step size
+        fp_t max_step = fp_t(1e2);          ///< maximum step size
 
+        /// @brief whether the line search is successful
+        /// @return true if successful
         virtual bool success() const { return true; }
 
-        virtual void init(Problem *p, Args &)
+        /// @brief initialize the line search
+        /// @param p problem
+        /// @param args Line Search arguments
+        virtual void init(Problem *p, Args &arg)
         {
             this->prob = p;
         }
 
+        /// @brief line search with the given arguments
+        /// @details all LineSearch classes will using previous loss and grad to find the proper step which meats different requirements. After finishing line search, it will update current loss and gradient at the new point.
+        /// @param arg Line Search arguments
         virtual void line_search(Args &arg)
         {
             arg.step_forward(prob);

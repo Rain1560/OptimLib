@@ -1,5 +1,9 @@
+#pragma once
+#ifndef __OPTIM_NEWTON_CG_HPP__
+#define __OPTIM_NEWTON_CG_HPP__
 #include "unconstrained/newton/NewtonCG.hpp"
 
+/// @cond
 namespace optim::internal::NewtonCG
 {
     template <typename fp_t>
@@ -7,11 +11,12 @@ namespace optim::internal::NewtonCG
     {
         int max_iter;
         fp_t tol;
+        int status = 0;
     };
 
     template <typename fp_t>
-    int cg(const Mat<fp_t> &H, const Mat<fp_t> &g,
-           Mat<fp_t> &d, const cgParams &param)
+    void cg(const Mat<fp_t> &H, const Mat<fp_t> &g,
+           Mat<fp_t> &d, cgParams<fp_t> &param)
     {
         BMO_SET_ZERO(d);
         Mat<fp_t> r = g, p = r, Hp;
@@ -22,15 +27,23 @@ namespace optim::internal::NewtonCG
             Hp = H * p;
             alpha = r_nrm2 / BMO_MAT_DOT_PROD(p, Hp);
             if (alpha <= 0.)
-                return -1;
+            {
+                param.status = -1;
+                return;
+            }
             d += alpha * p;
             r -= alpha * Hp;
             r_nrm2_new = BMO_SQUARE_NORM(r);
             if (std::sqrt(r_nrm2_new) / r0_nrm < param.tol)
-                return 0;
+            {
+                param.status = 0;
+                return;
+            }
             p = r + (r_nrm2_new / r_nrm2) * p;
             r_nrm2 = r_nrm2_new;
         }
-        return 1;
+        param.status = 1;
     }
 }
+/// @endcond
+#endif

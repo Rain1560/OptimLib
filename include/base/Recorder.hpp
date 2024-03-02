@@ -5,6 +5,7 @@
 #include "macro/macro.h"
 #include "misc/logger.hpp"
 
+///< @cond
 namespace optim
 {
     template <typename T>
@@ -187,6 +188,8 @@ namespace optim
     };
 
 } // namespace optim
+
+/// @endcond
 
 // #ifdef OPTIM_HEADER_ONLY
 // #include "base/Recorder.cpp"

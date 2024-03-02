@@ -1,6 +1,7 @@
 #include "base.hpp"
 
 // reference: https://ftp.mcs.anl.gov/pub/MINPACK-2/csrch
+/// @cond
 namespace optim::internal::MTLineSearch
 {
     template <typename fp_t>
@@ -45,12 +46,14 @@ namespace optim::internal::MTLineSearch
     template <typename fp_t, bool use_prox = false>
     struct FuncVal : public BaseFuncVal<fp_t>
     {
+        using Problem = typename LineSearch<fp_t, use_prox>::Problem;
+
         FuncVal(
             fp_t argument, fp_t value, fp_t derivative)
             : BaseFuncVal<fp_t>(argument, value, derivative){};
 
         void update_val(
-            LineSearch<fp_t, use_prox>::Problem *prob,
+            Problem *prob,
             LineSearchArgs<fp_t, use_prox> &arg)
         { // arg update but val and grad not
             arg.step_forward(prob);
@@ -234,3 +237,4 @@ namespace optim::internal::MTLineSearch
     }
 
 } // namespace internal::MTLineSearch
+/// @endcond

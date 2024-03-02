@@ -48,6 +48,7 @@ namespace optim
             arg.step_forward(this->prob);
             arg.update_cur_loss(this->prob);
             arg.update_cur_grad(this->prob);
+            arg.direction = -arg.cur_grad;
             ls->init(this->prob, arg);
             arg.flush();
             ls->line_search(arg);
@@ -58,7 +59,8 @@ namespace optim
                 // check convergence condition
                 x_diff_nrm = BMO_FRO_NORM(s);
                 g_nrm = BMO_FRO_NORM(arg.cur_grad);
-                f_diff = std::abs(arg.cur_loss - arg.prev_loss);
+                f_diff = std::abs(arg.cur_loss - arg.prev_loss) /
+                         (std::abs(arg.cur_loss) + fp_t(1));
                 if (g_nrm < gtol && x_diff_nrm < xtol && f_diff < ftol)
                 {
                     status = 0;
@@ -72,7 +74,7 @@ namespace optim
                 Hy = BMO_TRANSPOSE(H) * y;
                 H -= s * BMO_TRANSPOSE(Hy) / sTy;
                 H += (s * BMO_TRANSPOSE(s)) / sTy;
-                arg.direction = -H * arg.direction;
+                arg.direction = -H * arg.cur_grad;
                 BMO_RESIZE(arg.direction, n, k);
                 BMO_RESIZE(s, n, k), BMO_RESIZE(y, n, k);
                 // update prev values

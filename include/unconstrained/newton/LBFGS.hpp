@@ -91,8 +91,9 @@ namespace optim
             // begin main loop
             for (iter = 1; iter <= max_iter; iter++)
             {
+                // arg.direc = -arg.cur_grad;
                 update_direction(arg);
-                // compute H * -grad
+                // compute d = H * -grad
                 lbfgs_update_direction(arg.step, memory, arg.direction);
                 // update prev_x, prev_g, prev_loss and memory
                 arg.step = fp_t(1), arg.flush();
@@ -102,7 +103,7 @@ namespace optim
                 g_nrm = BMO_FRO_NORM(arg.cur_grad);
                 x_diff_nrm = BMO_FRO_NORM(sy.s); // = norm(d) * step;
                 f_diff = std::abs(arg.cur_loss - arg.prev_loss) /
-                         std::abs(arg.cur_loss);
+                         (std::abs(arg.cur_loss) + fp_t(1));
                 if (g_nrm < gtol && x_diff_nrm < xtol && f_diff < ftol)
                 { // check stop criteria and resize back
                     status = 0;

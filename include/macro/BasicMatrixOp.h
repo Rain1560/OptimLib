@@ -51,6 +51,12 @@
 #elif OPTIM_USE_ARMA
 #define BMO_IDENTITY(Mat, rows, cols) Mat(rows, cols, arma::fill::eye)
 #endif
+/*--------------------As Diagnol-----------------*/
+#ifdef OPTIM_USE_EIGEN
+#define BMO_AS_DIAG(X) (X).asDiagonal()
+#elif OPTIM_USE_ARMA
+#define BMO_AS_DIAG(X) arma::diagmat(X)
+#endif
 /*--------------------Array  div------------------*/
 #ifdef OPTIM_USE_EIGEN
 #define BMO_ARRAY_DIV(X, Y) (X).array() / (Y).array()
@@ -80,6 +86,12 @@
 #define BMO_ARRAY_EXP(X) (X).array().exp().matrix()
 #elif OPTIM_USE_ARMA
 #define BMO_ARRAY_EXP(X) arma::exp(X)
+#endif
+/*--------------------Array  log------------------*/
+#ifdef OPTIM_USE_EIGEN
+#define BMO_ARRAY_LOG(X) (X).array().log().matrix()
+#elif OPTIM_USE_ARMA
+#define BMO_ARRAY_LOG(X) arma::log(X)
 #endif
 /*--------------------Array + Scalar------------------*/
 #ifdef OPTIM_USE_EIGEN

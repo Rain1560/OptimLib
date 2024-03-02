@@ -18,7 +18,7 @@ namespace optim
         : public LineSearch<fp_t, use_prox>
     {
     public:
-        using Problem = LineSearch<fp_t, use_prox>::Problem;
+        using Problem = typename LineSearch<fp_t, use_prox>::Problem;
         using Args = LineSearchArgs<fp_t, use_prox>;
 
     private:
@@ -71,7 +71,7 @@ namespace optim
                 else
                     dTg = BMO_MAT_DOT_PROD(arg.direction, arg.prev_grad);
                 optim_assert(dTg < 0, "dTg must be negtive.");
-                if (arg.cur_loss <= Cval - pho * arg.step * dTg ||
+                if (arg.cur_loss <= Cval + pho * arg.step * dTg ||
                     arg.step == this->min_step)
                 {
                     // update pQ, Q, Cval

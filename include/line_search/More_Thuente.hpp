@@ -18,7 +18,7 @@ namespace optim
         friend class BaseSolver<fp_t>;
 
     public:
-        using Problem = LineSearch<fp_t>::Problem;
+        using Problem = typename LineSearch<fp_t>::Problem;
         using Args = LineSearchArgs<fp_t, use_prox>;
 
     private:
