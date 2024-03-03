@@ -16,6 +16,8 @@ namespace optim
     public:
         using Problem = GradProblem<fp_t>;
         using Constant = OptimConst<fp_t>;
+        using LineSearchImp = typename LSBaseSolver<fp_t, false>::LineSearchImp;
+
         using BaseSolver<fp_t>::iter;
         using LSBaseSolver<fp_t, false>::ls;
 
@@ -37,12 +39,12 @@ namespace optim
             this->ls.reset(new MTLS<fp_t, false>());
         }
 
-        template <class LS>
-        explicit BFGS(Problem &prob, LS &ls)
+        explicit BFGS(
+            Problem &prob, std::shared_ptr<LineSearchImp> ls)
         {
             this->prob = &prob;
-            this->reset_ls(ls);
-        };
+            this->ls = ls;
+        }
 
         fp_t solve(Mat<fp_t> &x) override
         {

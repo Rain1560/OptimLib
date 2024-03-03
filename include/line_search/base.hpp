@@ -244,15 +244,12 @@ namespace optim
         using LineSearchImp = LineSearch<fp_t, use_prox>;
 
     protected:
-        std::unique_ptr<LineSearchImp> ls;
+        std::shared_ptr<LineSearchImp> ls;
 
     public:
-        template <class LS>
-        void reset_ls(LS &ls)
+        void reset_ls(std::shared_ptr<LineSearchImp> ls)
         {
-            static_assert(std::is_base_of<LineSearchImp, LS>::value,
-                          "LS must be derived from LineSearch");
-            this->ls.reset(new LS(ls));
+            this->ls = ls;
         }
     };
 }

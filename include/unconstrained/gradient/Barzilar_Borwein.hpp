@@ -14,6 +14,8 @@ namespace optim
         using Problem = ProxWrapper<
             fp_t, GradProblem, use_prox>;
         using Constant = OptimConst<fp_t>;
+        using LineSearchImp = typename LSBaseSolver<fp_t, use_prox>::LineSearchImp;
+
         using BaseSolver<fp_t>::iter;
         using LSBaseSolver<fp_t, use_prox>::ls;
 
@@ -34,12 +36,11 @@ namespace optim
             this->ls.reset(new ZHLS<fp_t, use_prox>());
         }
 
-        template <class LS>
         explicit BarzilarBorwein(
-            Problem &prob, LS &ls)
+            Problem &prob, std::shared_ptr<LineSearchImp> ls)
         {
             this->prob = &prob;
-            this->reset_ls(ls);
+            this->ls = ls;
         }
 
         fp_t solve(Mat<fp_t> &x) override
