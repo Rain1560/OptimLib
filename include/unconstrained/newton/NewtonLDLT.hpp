@@ -20,7 +20,7 @@ namespace optim
         using LSBaseSolver<fp_t>::ls;
 
     private:
-        Problem *prob;
+        std::shared_ptr<Problem> prob;
 
     public:
         int max_iter = 100;
@@ -29,16 +29,17 @@ namespace optim
         fp_t gtol = 1e-6;
         int status;
 
-        explicit NewtonLDLT(Problem &prob)
+        explicit NewtonLDLT(std::shared_ptr<Problem> prob)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls.reset(new MTLS<fp_t, false>());
         }
 
         explicit NewtonLDLT(
-            Problem &prob, std::shared_ptr<LineSearchImp> ls)
+            std::shared_ptr<Problem> prob,
+            std::shared_ptr<LineSearchImp> ls)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls = ls;
         }
 
@@ -50,8 +51,8 @@ namespace optim
             Mat<fp_t> H(nk, nk);
             LineSearchArgs<fp_t, false> arg(x);
             fp_t f_diff, x_diff_nrm, g_nrm;
-            arg.update_cur_loss(prob);
-            arg.update_cur_grad(prob);
+            arg.update_cur_loss(prob.get());
+            arg.update_cur_grad(prob.get());
             ls->init(prob, arg);
             for (iter = 1; iter <= max_iter; iter++)
             {

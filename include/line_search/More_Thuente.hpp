@@ -72,13 +72,6 @@ namespace optim
         };
 
     public:
-        MTLineSearch() {}
-
-        explicit MTLineSearch(Problem &p)
-        {
-            this->prob = &p;
-        }
-
         /// @brief More-Thuente line search Algorithm implementation for efficiently invoke by taking less computing on f(x0),\f$\nabla f(x0)\f$
         void line_search(Args &arg) override
         {
@@ -90,14 +83,14 @@ namespace optim
             iter = 0;      // reset iter
             fp_t g_0, g_t; // = grad_0.T * d;
             // check wolfe condition
-            arg.step_forward(this->prob);
-            arg.update_cur_loss(this->prob);
-            arg.update_cur_grad(this->prob);
+            arg.step_forward(this->prob.get());
+            arg.update_cur_loss(this->prob.get());
+            arg.update_cur_grad(this->prob.get());
             // update subgradient if needed
             if constexpr (use_prox)
             {
-                arg.update_prev_grad_map(this->prob);
-                arg.update_cur_grad_map(this->prob);
+                arg.update_prev_grad_map(this->prob.get());
+                arg.update_cur_grad_map(this->prob.get());
                 arg.tmp = arg.cur_x - arg.prev_x;
                 g_0 = BMO_MAT_DOT_PROD(arg.prev_grad_map, arg.tmp) /
                       arg.step;
@@ -208,7 +201,7 @@ namespace optim
                     logger.trace("[MTLS] iter: {:<3d}  brackt:{:<5}  use_auxilary: {:<5}\n| a_l: {:<10g} | a_t: {:<10g} | a_u: {:<10g} |\n| f_l: {:<10g} | f_t: {:<10g} | f_u: {:<10g} |\n| g_l: {:<10g} | g_t: {:<10g} | g_u: {:<10g} |", iter, brackt, use_auxiliary, a_l.arg, a_t.arg, a_u.arg, a_l.val, a_t.val, a_u.val, a_l.deriv, a_t.deriv, a_u.deriv);
                 }
                 // compute new step
-                a_t.update_val(this->prob, arg);
+                a_t.update_val(this->prob.get(), arg);
                 // check if switch to "Modified Updating Method"
                 if (use_auxiliary &&
                     a_t.val <= arg.prev_loss + g_t && // psi(a_t) <= 0

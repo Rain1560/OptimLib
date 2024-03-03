@@ -22,7 +22,7 @@ namespace optim
         using LSBaseSolver<fp_t, false>::ls;
 
     private:
-        Problem *prob;
+        std::shared_ptr<Problem> prob;
 
     public:
         int max_iter = 100; ///< max number of iterations
@@ -33,16 +33,17 @@ namespace optim
         int status;         // wether solve successfully
 
     public:
-        explicit BFGS(Problem &prob)
+        explicit BFGS(std::shared_ptr<Problem> prob)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls.reset(new MTLS<fp_t, false>());
         }
 
         explicit BFGS(
-            Problem &prob, std::shared_ptr<LineSearchImp> ls)
+            std::shared_ptr<Problem> prob,
+            std::shared_ptr<LineSearchImp> ls)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls = ls;
         }
 
@@ -57,9 +58,9 @@ namespace optim
             // H: approximate inverse Hessian
             fp_t sTy, g_nrm, x_diff_nrm, f_diff;
             arg.step = step;
-            arg.step_forward(this->prob);
-            arg.update_cur_loss(this->prob);
-            arg.update_cur_grad(this->prob);
+            arg.step_forward(this->prob.get());
+            arg.update_cur_loss(this->prob.get());
+            arg.update_cur_grad(this->prob.get());
             arg.direction = -arg.cur_grad;
             ls->init(this->prob, arg);
             arg.flush();

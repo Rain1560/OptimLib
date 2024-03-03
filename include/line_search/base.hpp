@@ -208,7 +208,7 @@ namespace optim
         using Args = LineSearchArgs<fp_t, use_prox>;
 
     protected:
-        Problem *prob;
+        std::shared_ptr<Problem> prob;
 
     public:
         fp_t min_step = Constant::sqrt_eps; ///< minimum step size
@@ -221,7 +221,8 @@ namespace optim
         /// @brief initialize the line search
         /// @param p problem
         /// @param args Line Search arguments
-        virtual void init(Problem *p, Args &arg)
+        virtual void init(
+            std::shared_ptr<Problem> p, Args &arg)
         {
             this->prob = p;
         }
@@ -231,8 +232,8 @@ namespace optim
         /// @param arg Line Search arguments
         virtual void line_search(Args &arg)
         {
-            arg.step_forward(prob);
-            arg.update_cur_grad(prob);
+            arg.step_forward(prob.get());
+            arg.update_cur_grad(prob.get());
         }
 
         virtual ~LineSearch() = default;

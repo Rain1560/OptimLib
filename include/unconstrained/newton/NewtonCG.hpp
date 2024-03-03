@@ -20,7 +20,7 @@ namespace optim
         using LSBaseSolver<fp_t>::ls;
 
     private:
-        Problem *prob;
+        std::shared_ptr<Problem> prob;
 
     public:
         int max_iter = 100;
@@ -31,16 +31,17 @@ namespace optim
         int status;
 
     public:
-        explicit NewtonCG(Problem &prob)
+        explicit NewtonCG(std::shared_ptr<Problem> prob)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls.reset(new MTLS<fp_t, false>());
         }
 
         explicit NewtonCG(
-            Problem &prob, std::shared_ptr<LineSearchImp> ls)
+            std::shared_ptr<Problem> prob,
+            std::shared_ptr<LineSearchImp> ls)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls = ls;
         }
 
@@ -57,8 +58,8 @@ namespace optim
             if (cg_max_iter < 0 || cg_max_iter > nk)
                 cg_arg.max_iter = nk;
             cg_arg.tol = gtol;
-            arg.update_cur_loss(prob);
-            arg.update_cur_grad(prob);
+            arg.update_cur_loss(prob.get());
+            arg.update_cur_grad(prob.get());
             ls->init(prob, arg);
             for (iter = 1; iter <= max_iter; iter++)
             {

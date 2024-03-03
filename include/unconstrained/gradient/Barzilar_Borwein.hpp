@@ -19,8 +19,8 @@ namespace optim
         using BaseSolver<fp_t>::iter;
         using LSBaseSolver<fp_t, use_prox>::ls;
 
-        private:
-            Problem *prob;
+    private:
+        std::shared_ptr<Problem> prob;
 
     public:
         int max_iter = 100; /// max number of iterations
@@ -30,16 +30,18 @@ namespace optim
         fp_t step = 1e-2;   /// initial step length, used when bb step is not available
 
     public:
-        explicit BarzilarBorwein(Problem &prob)
+        explicit BarzilarBorwein(
+            std::shared_ptr<Problem> prob)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls.reset(new ZHLS<fp_t, use_prox>());
         }
 
         explicit BarzilarBorwein(
-            Problem &prob, std::shared_ptr<LineSearchImp> ls)
+            std::shared_ptr<Problem> prob,
+            std::shared_ptr<LineSearchImp> ls)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls = ls;
         }
 
@@ -52,8 +54,8 @@ namespace optim
             fp_t g_nrm, diff_x_nrm, diff_abs_f;
             // first step
             args.step = this->step;
-            args.update_cur_loss(prob);
-            args.update_cur_grad(prob);
+            args.update_cur_loss(prob.get());
+            args.update_cur_grad(prob.get());
             args.direction = -args.cur_grad;
             ls->init(prob, args);
             args.flush(); // move cur to prev
@@ -66,7 +68,7 @@ namespace optim
                 diff_x_nrm = BMO_FRO_NORM(s);
                 if constexpr (use_prox)
                 {
-                    args.update_cur_grad_map(prob);
+                    args.update_cur_grad_map(prob.get());
                     g_nrm = BMO_FRO_NORM(args.cur_grad_map);
                 }
                 else

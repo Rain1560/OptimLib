@@ -23,7 +23,7 @@ namespace optim
         using LSBaseSolver<fp_t, false>::ls;
 
     private:
-        Problem *prob;
+        std::shared_ptr<Problem> prob;
 
     public:
         int max_iter = 100; ///< max number of iterations
@@ -66,16 +66,17 @@ namespace optim
         }
 
     public:
-        explicit LBFGS(Problem &prob)
+        explicit LBFGS(std::shared_ptr<Problem> prob)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls.reset(new MTLS<fp_t, false>());
         }
 
         explicit LBFGS(
-            Problem &prob, std::shared_ptr<LineSearchImp> ls)
+            std::shared_ptr<Problem> prob,
+            std::shared_ptr<LineSearchImp> ls)
         {
-            this->prob = &prob;
+            this->prob = prob;
             this->ls = ls;
         }
 
@@ -85,8 +86,8 @@ namespace optim
             Storage sy;
             LineSearchArgs<fp_t, false> arg(x);
             fp_t g_nrm, x_diff_nrm, f_diff;
-            arg.update_cur_loss(this->prob);
-            arg.update_cur_grad(this->prob);
+            arg.update_cur_loss(this->prob.get());
+            arg.update_cur_grad(this->prob.get());
             ls->init(this->prob, arg);
             arg.step = step;
             // make step 0

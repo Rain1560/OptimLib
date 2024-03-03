@@ -37,14 +37,8 @@ namespace optim
         int status = 0;
 
     public:
-        ZHLineSearch() {}
-
-        explicit ZHLineSearch(Problem &prob)
-        {
-            this->prob = &prob;
-        }
-
-        void init(Problem *p, Args &arg)
+        void init(
+            std::shared_ptr<Problem> p, Args &arg) override
         {
             this->prob = p;
             this->Cval = arg.cur_loss;
@@ -60,11 +54,11 @@ namespace optim
             // begin line search
             for (iter = 1; iter <= max_iter; iter++)
             {
-                arg.step_forward(this->prob);
-                arg.update_cur_loss(this->prob);
+                arg.step_forward(this->prob.get());
+                arg.update_cur_loss(this->prob.get());
                 if constexpr (use_prox)
                 {
-                    arg.update_prev_grad_map(this->prob);
+                    arg.update_prev_grad_map(this->prob.get());
                     arg.tmp = arg.cur_x - arg.prev_x;
                     dTg = BMO_MAT_DOT_PROD(
                               arg.tmp, arg.prev_grad_map) /
@@ -89,10 +83,10 @@ namespace optim
             // if line search failed, use the min step
             // and give a warning(TODO)
             arg.step = this->min_step;
-            arg.step_forward(this->prob);
-            arg.update_cur_loss(this->prob);
+            arg.step_forward(this->prob.get());
+            arg.update_cur_loss(this->prob.get());
         over:
-            arg.update_cur_grad(this->prob);
+            arg.update_cur_grad(this->prob.get());
         };
 
         bool success() const override
