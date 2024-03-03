@@ -1,4 +1,5 @@
 #include "base/BaseSolver.hpp"
+/// @cond
 namespace optim
 {
     namespace internal::LBFGS
@@ -35,3 +36,4 @@ namespace optim
     }
 
 }
+/// @endcond

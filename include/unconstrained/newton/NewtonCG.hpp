@@ -9,19 +9,18 @@ namespace optim
 {
     template <typename fp_t = double>
     class NewtonCG final
-        : public BaseSolver<fp_t>
+        : public LSBaseSolver<fp_t>
     {
     public:
         using Constant = OptimConst<fp_t>;
         using Problem = HessProblem<fp_t>;
         using BaseSolver<fp_t>::iter;
-        using LineSearchImp = LineSearch<fp_t, false>;
+        using LSBaseSolver<fp_t>::ls;
 
     private:
         Problem *prob;
 
     public:
-        LineSearchImp *ls;
         int max_iter = 100;
         fp_t xtol = 1e-10;
         fp_t ftol = 1e-10;
@@ -29,11 +28,18 @@ namespace optim
         int cg_max_iter = -1;
         int status;
 
-        explicit NewtonCG(
-            Problem &prob, LineSearchImp &ls)
+    public:
+        explicit NewtonCG(Problem &prob)
         {
             this->prob = &prob;
-            this->ls = &ls;
+            this->ls.reset(new MTLS<fp_t, false>());
+        }
+
+        template <class LS>
+        explicit NewtonCG(Problem &prob, LS &ls)
+        {
+            this->prob = &prob;
+            this->reset_ls(ls);
         }
 
         fp_t solve(Mat<fp_t> &x) override

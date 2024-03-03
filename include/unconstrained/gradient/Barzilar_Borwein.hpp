@@ -9,18 +9,18 @@ namespace optim
     template <typename fp_t = double,
               bool use_prox = false>
     struct BarzilarBorwein final
-        : public BaseSolver<fp_t>
+        : public LSBaseSolver<fp_t, use_prox>
     {
         using Problem = ProxWrapper<
             fp_t, GradProblem, use_prox>;
         using Constant = OptimConst<fp_t>;
         using BaseSolver<fp_t>::iter;
+        using LSBaseSolver<fp_t, use_prox>::ls;
 
-    private:
-        Problem *prob;
+        private:
+            Problem *prob;
 
     public:
-        LineSearch<fp_t, use_prox> *ls;
         int max_iter = 100; /// max number of iterations
         fp_t xtol = 1e-4;   /// stop if |x_{k+1} - x_k| < xtol
         fp_t ftol = 1e-4;   /// stop if |f_{k+1} - f_k| < ftol
@@ -28,12 +28,18 @@ namespace optim
         fp_t step = 1e-2;   /// initial step length, used when bb step is not available
 
     public:
+        explicit BarzilarBorwein(Problem &prob)
+        {
+            this->prob = &prob;
+            this->ls.reset(new ZHLS<fp_t, use_prox>());
+        }
+
         template <class LS>
         explicit BarzilarBorwein(
             Problem &prob, LS &ls)
         {
             this->prob = &prob;
-            this->ls = &ls;
+            this->reset_ls(ls);
         }
 
         fp_t solve(Mat<fp_t> &x) override

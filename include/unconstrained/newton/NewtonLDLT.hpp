@@ -9,31 +9,35 @@ namespace optim
 {
     template <typename fp_t>
     class NewtonLDLT final
-        : public BaseSolver<fp_t>
+        : public LSBaseSolver<fp_t>
     {
     public:
         using Constant = OptimConst<fp_t>;
         using Problem = HessProblem<fp_t>;
         using BaseSolver<fp_t>::iter;
-        using LineSearchImp = LineSearch<fp_t, false>;
+        using LSBaseSolver<fp_t>::ls;
 
     private:
         Problem *prob;
 
     public:
-        LineSearchImp *ls;
         int max_iter = 100;
         fp_t xtol = 1e-10;
         fp_t ftol = 1e-6;
         fp_t gtol = 1e-6;
         int status;
 
-        explicit NewtonLDLT(
-            Problem &prob,
-            LineSearchImp &ls)
+        explicit NewtonLDLT(Problem &prob)
         {
             this->prob = &prob;
-            this->ls = &ls;
+            this->ls.reset(new MTLS<fp_t, false>());
+        }
+
+        template <class LS>
+        explicit NewtonLDLT(Problem &prob, LS &ls)
+        {
+            this->prob = &prob;
+            this->reset_ls(ls);
         }
 
         fp_t solve(Mat<fp_t> &x) override

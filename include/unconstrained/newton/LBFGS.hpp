@@ -7,8 +7,10 @@
 
 namespace optim
 {
+    /// @brief Limited-memory BFGS (L-BFGS) algorithm
+    /// @tparam fp_t floating-point type
     template <typename fp_t>
-    class LBFGS final : public BaseSolver<fp_t>
+    class LBFGS final : public LSBaseSolver<fp_t, false>
     {
         using Storage = internal::LBFGS::Storage<fp_t>;
 
@@ -16,13 +18,12 @@ namespace optim
         using Problem = GradProblem<fp_t>;
         using Constant = OptimConst<fp_t>;
         using BaseSolver<fp_t>::iter;
-        using LineSearchImp = LineSearch<fp_t, false>;
+        using LSBaseSolver<fp_t, false>::ls;
 
     private:
         Problem *prob;
 
     public:
-        LineSearchImp *ls;
         int max_iter = 100; ///< max number of iterations
         fp_t xtol = 1e-6;   ///< stop if |x_{k+1} - x_k| < xtol
         fp_t ftol = 1e-6;   ///< stop if |f_{k+1} - f_k| < ftol
@@ -63,12 +64,17 @@ namespace optim
         }
 
     public:
-        explicit LBFGS(
-            Problem &prob,
-            LineSearchImp &ls)
+        explicit LBFGS(Problem &prob)
         {
             this->prob = &prob;
-            this->ls = &ls;
+            this->ls.reset(new MTLS<fp_t, false>());
+        }
+
+        template <class LS>
+        explicit LBFGS(Problem &prob, LS &ls)
+        {
+            this->prob = &prob;
+            this->reset_ls(ls);
         };
 
         fp_t solve(Mat<fp_t> &x) override

@@ -7,10 +7,10 @@
 /**
  * \page line_search Line Search
  * \par
- * Below Line Search algorithms are trying to find a step \f$ t_k \f$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant. 
+ * Below Line Search algorithms are trying to find a step \f$ t_k \f$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.
  * \par
  * We define 2 line search functions: \f$ \phi(\alpha) = f(x + \alpha d) \f$ and auxiliary function \f$ \psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi'(0) \f$.
- * 
+ *
  * # Armijo Line Search
  * \copydoc ArmijoLineSearch
  * # Zhang-Hager Line Search
@@ -236,6 +236,24 @@ namespace optim
         }
 
         virtual ~LineSearch() = default;
+    };
+
+    template <typename fp_t, bool use_prox = false>
+    struct LSBaseSolver : public BaseSolver<fp_t>
+    {
+        using LineSearchImp = LineSearch<fp_t, use_prox>;
+
+    protected:
+        std::unique_ptr<LineSearchImp> ls;
+
+    public:
+        template <class LS>
+        void reset_ls(LS &ls)
+        {
+            static_assert(std::is_base_of<LineSearchImp, LS>::value,
+                          "LS must be derived from LineSearch");
+            this->ls.reset(new LS(ls));
+        }
     };
 }
 
