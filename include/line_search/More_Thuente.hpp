@@ -7,17 +7,17 @@
 /**
  * \page MTLineSearch
  * \par
- * The More-Thuente line search algorithm is a line search algorithm that satisfies the strong Wolfe conditions: 
- * 
+ * The More-Thuente line search algorithm is a line search algorithm that satisfies the strong Wolfe conditions:
+ *
  * \f{align*}
  * f(x_k + \alpha_k d) &\leq f(x_k) + c_1 \alpha_k \nabla f(x_k)^T d \\
  * |\nabla f(x_k + \alpha_k d)^T d| &\leq c_2 |\nabla f(x_k)^T d| \\
  * c_1 \in (0, \frac{1}{2}) &\quad c_2 \in (0, 1)
  * \f}
- * 
- * \par 
+ *
+ * \par
  * Note that \f$ c_1 \f$ should be close to 0 and \f$ c_2 \f$ should be close to 1. Otherwise it will be hard to find a step that satisfies the conditions.
- * \par 
+ * \par
  * The algorithm step is computed by the following steps:
  * \par
  * Denote \f$ \alpha_l, \alpha_u, \alpha_t \f$ and there corresponding function values and derivatives as \f$ f_l, f_u, f_t, g_l, g_u, g_t \f$. After step 4 below, we ensure that \f$ f_l \leq f_u \f$. When the bracket is true, the minimum of \f$ \phi \f$ is guaranteed to be within the interval \f$ [\alpha_l, \alpha_u] \f$.
@@ -29,7 +29,7 @@
  * 6. let \f$ \alpha_t \f$ be the new trial step and update the function value and derivative.
  * 7. check if we should switch to "Modified Updating Method" and if bracket is true.
  * 8. update the interval of uncertainty, go to step 3.
-*/
+ */
 
 namespace optim
 {

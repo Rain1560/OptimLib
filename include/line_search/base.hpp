@@ -21,6 +21,23 @@
 
 namespace optim
 {
+    template <typename fp_t>
+    struct BaseLineSearchArgs
+    {
+        fp_t step; ///< step size
+
+        fp_t prev_loss; ///< previous loss
+        fp_t cur_loss;  ///< current loss
+
+        Mat<fp_t> direction; ///< step direction
+
+        Mat<fp_t> prev_x; ///< previous point
+        Mat<fp_t> cur_x;  ///< current point
+
+        Mat<fp_t> prev_grad; ///< previous gradient
+        Mat<fp_t> cur_grad;  ///< current gradient
+    };
+
     /// @cond
     template <typename fp_t, bool use_prox>
     struct LineSearchArgs;
@@ -29,22 +46,10 @@ namespace optim
     /// @brief Line search arguments
     /// @tparam fp_t floating-point type
     template <typename fp_t>
-    struct LineSearchArgs<fp_t, false>
+    struct LineSearchArgs<fp_t, false> final
+        : public BaseLineSearchArgs<fp_t>
     {
         using Problem = GradProblem<fp_t>;
-
-        fp_t step; ///< step size
-
-        fp_t prev_loss; ///< previous loss
-        fp_t cur_loss;  ///< current loss
-
-        Mat<fp_t> direction; ///< step direction
-
-        Mat<fp_t> prev_x; ///< previous point
-        Mat<fp_t> cur_x;  ///< current point
-
-        Mat<fp_t> prev_grad; ///< previous gradient
-        Mat<fp_t> cur_grad;  ///< current gradient
 
         /// @brief  malloc the memory for the line search arguments and assign x to the current point
         /// @param x initial point
@@ -52,61 +57,49 @@ namespace optim
         {
             const Index n = BMO_ROWS(x),
                         m = BMO_COLS(x);
-            cur_x = x;
-            BMO_RESIZE(prev_x, n, m);
-            BMO_RESIZE(prev_grad, n, m);
-            BMO_RESIZE(cur_grad, n, m);
-            BMO_RESIZE(direction, n, m);
+            this->cur_x = x;
+            BMO_RESIZE(this->prev_x, n, m);
+            BMO_RESIZE(this->prev_grad, n, m);
+            BMO_RESIZE(this->cur_grad, n, m);
+            BMO_RESIZE(this->direction, n, m);
         }
 
         /// @brief Step forward to the next point
         OPTIM_STRONG_INLINE
         void step_forward(Problem *)
         {
-            cur_x = prev_x + step * direction;
+            this->cur_x = this->prev_x + this->step * this->direction;
         }
 
         /// @brief Update the current loss
         OPTIM_STRONG_INLINE
         void update_cur_loss(Problem *prob)
         {
-            cur_loss = prob->loss(cur_x);
+            this->cur_loss = prob->loss(this->cur_x);
         }
 
         /// @brief Update the current gradient
         OPTIM_STRONG_INLINE
         void update_cur_grad(Problem *prob)
         {
-            prob->grad(cur_x, cur_grad);
+            prob->grad(this->cur_x, this->cur_grad);
         }
 
         /// @brief Flush the current state to the previous state
         OPTIM_STRONG_INLINE
         void flush()
         {
-            BMO_SWAP(prev_x, cur_x);
-            BMO_SWAP(prev_grad, cur_grad);
-            prev_loss = cur_loss;
+            BMO_SWAP(this->prev_x, this->cur_x);
+            BMO_SWAP(this->prev_grad, this->cur_grad);
+            this->prev_loss = this->cur_loss;
         }
     };
 
     template <typename fp_t>
-    struct LineSearchArgs<fp_t, true>
+    struct LineSearchArgs<fp_t, true> final
+        : public BaseLineSearchArgs<fp_t>
     {
         using Problem = internal::ProxOperator<fp_t, GradProblem>;
-
-        fp_t step; ///< step size
-
-        fp_t prev_loss; ///< previous loss
-        fp_t cur_loss;  ///< current loss
-
-        Mat<fp_t> direction; ///< step direction
-
-        Mat<fp_t> prev_x; ///< previous point
-        Mat<fp_t> cur_x;  ///< current point
-
-        Mat<fp_t> prev_grad; ///< previous gradient
-        Mat<fp_t> cur_grad;  ///< current gradient
 
         Mat<fp_t> prev_grad_map; ///< previous gradient mapping
         Mat<fp_t> cur_grad_map;  ///< current gradient mapping
@@ -126,11 +119,11 @@ namespace optim
         {
             const Index n = BMO_ROWS(x),
                         m = BMO_COLS(x);
-            cur_x = x;
-            BMO_RESIZE(prev_x, n, m);
-            BMO_RESIZE(prev_grad, n, m);
-            BMO_RESIZE(cur_grad, n, m);
-            BMO_RESIZE(direction, n, m);
+            this->cur_x = x;
+            BMO_RESIZE(this->prev_x, n, m);
+            BMO_RESIZE(this->prev_grad, n, m);
+            BMO_RESIZE(this->cur_grad, n, m);
+            BMO_RESIZE(this->direction, n, m);
             BMO_RESIZE(prev_grad_map, n, m);
             BMO_RESIZE(cur_grad_map, n, m);
             BMO_RESIZE(tmp, n, m);
@@ -140,58 +133,58 @@ namespace optim
         OPTIM_STRONG_INLINE void
         step_forward(Problem *prob)
         {
-            cur_x = prev_x + step * direction;
-            prob->prox(step, cur_x, tmp);
-            BMO_SWAP(cur_x, tmp);
+            this->cur_x = this->prev_x + this->step * this->direction;
+            prob->prox(this->step, this->cur_x, tmp);
+            BMO_SWAP(this->cur_x, tmp);
         }
 
         /// @brief Update the current loss
         OPTIM_STRONG_INLINE void
         update_cur_loss(Problem *prob)
         {
-            cur_sm_loss = prob->sm_loss(cur_x);
-            cur_nsm_loss = prob->nsm_loss(cur_x);
-            cur_loss = cur_sm_loss + cur_nsm_loss;
+            cur_sm_loss = prob->sm_loss(this->cur_x);
+            cur_nsm_loss = prob->nsm_loss(this->cur_x);
+            this->cur_loss = cur_sm_loss + cur_nsm_loss;
         }
 
         /// @brief Update the current gradient
         OPTIM_STRONG_INLINE void
         update_cur_grad(Problem *prob)
         {
-            prob->grad(cur_x, cur_grad);
-            cur_grad_map = cur_x - cur_grad;
-            prob->prox(1, cur_grad_map, tmp);
-            cur_grad_map = (cur_x - tmp) / step;
+            prob->grad(this->cur_x, this->cur_grad);
+            this->cur_grad_map = this->cur_x - this->cur_grad;
+            prob->prox(1, this->cur_grad_map, this->tmp);
+            this->cur_grad_map = (this->cur_x - this->tmp) / this->step;
         }
 
         /// @brief Update the previous gradient mapping
         OPTIM_STRONG_INLINE void
         update_prev_grad_map(Problem *prob)
         {
-            prev_grad_map = prev_x - step * prev_grad;
-            prob->prox(step, prev_grad_map, tmp);
-            prev_grad_map = (prev_x - tmp) / step;
+            this->prev_grad_map = this->prev_x - this->step * this->prev_grad;
+            prob->prox(this->step, this->prev_grad_map, this->tmp);
+            this->prev_grad_map = (this->prev_x - this->tmp) / this->step;
         }
 
         /// @brief Update the current gradient mapping
         OPTIM_STRONG_INLINE void
         update_cur_grad_map(Problem *prob)
         {
-            cur_grad_map = cur_x - step * cur_grad;
-            prob->prox(step, cur_grad_map, tmp);
-            cur_grad_map = (cur_x - tmp) / step;
+            cur_grad_map = this->cur_x - this->step * this->cur_grad;
+            prob->prox(this->step, cur_grad_map, tmp);
+            cur_grad_map = (this->cur_x - tmp) / this->step;
         }
 
         /// @brief Flush the current state to the previous state
         OPTIM_STRONG_INLINE void
         flush()
         {
-            BMO_SWAP(prev_x, cur_x);
-            BMO_SWAP(prev_grad, cur_grad);
+            BMO_SWAP(this->prev_x, this->cur_x);
+            BMO_SWAP(this->prev_grad, this->cur_grad);
             BMO_SWAP(prev_grad_map, cur_grad_map);
             prev_sm_loss = cur_sm_loss;
             prev_nsm_loss = cur_nsm_loss;
-            prev_loss = cur_loss;
+            this->prev_loss = this->cur_loss;
         }
     };
 
@@ -211,6 +204,8 @@ namespace optim
         std::shared_ptr<Problem> prob;
 
     public:
+        bool update_cur_grad = true;
+
         fp_t min_step = Constant::sqrt_eps; ///< minimum step size
         fp_t max_step = fp_t(1e2);          ///< maximum step size
 
@@ -228,11 +223,12 @@ namespace optim
         }
 
         /// @brief line search with the given arguments
-        /// @details All LineSearch classes will using previous loss and grad to find the proper step which meats different requirements. After finishing line search, it will update current loss and gradient at the new point.
+        /// @details Require: step, prev_x, direction, prev_loss, prev_grad. Line search will update cur_x, cur_loss. If you want line search to update cur_grad(and cur_grad_map in nsm problem), you should set `update_cur_grad` to true.
         /// @param arg Line Search arguments
         virtual void line_search(Args &arg)
         {
             arg.step_forward(prob.get());
+            arg.update_cur_loss(prob.get());
             arg.update_cur_grad(prob.get());
         }
 
@@ -244,14 +240,7 @@ namespace optim
     {
         using LineSearchImp = LineSearch<fp_t, use_prox>;
 
-    protected:
         std::shared_ptr<LineSearchImp> ls;
-
-    public:
-        void reset_ls(std::shared_ptr<LineSearchImp> ls)
-        {
-            this->ls = ls;
-        }
     };
 }
 
