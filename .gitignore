@@ -2,7 +2,6 @@
 bin
 lib
 build
-hw
+*hw*
 src
-doc/html
-doc/latex
+docs/latex
