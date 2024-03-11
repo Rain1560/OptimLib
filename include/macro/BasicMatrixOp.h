@@ -3,6 +3,12 @@
 #define _OPTIMLIB_MACRO_MATRIX_OP_H_
 
 #include "macro.h"
+/*-------------------Get Data------------------*/
+#if defined(OPTIM_USE_EIGEN)
+#define BMO_GET_DATA(X) (X).data()
+#elif defined(OPTIM_USE_ARMA)
+#define BMO_GET_DATA(X) (X).memptr()
+#endif
 /*------------------- N cols-------------------*/
 #ifdef OPTIM_USE_EIGEN
 #define BMO_COLS(X) (X).cols()
@@ -59,7 +65,7 @@
 #endif
 /*--------------------Array  div------------------*/
 #ifdef OPTIM_USE_EIGEN
-#define BMO_ARRAY_DIV(X, Y) (X).array() / (Y).array()
+#define BMO_ARRAY_DIV(X, Y) ((X).array() / (Y).array()).matrix()
 #elif OPTIM_USE_ARMA
 #define BMO_ARRAY_DIV(X, Y) (X) / (Y)
 #endif
@@ -67,7 +73,7 @@
 #ifdef OPTIM_USE_EIGEN
 #define BMO_ARRAY_INV(X) (X).array().inverse().matrix()
 #elif OPTIM_USE_ARMA
-#define BMO_ARRAY_INV(X) arma::inv(X)
+#define BMO_ARRAY_INV(X) 1 / (X)
 #endif
 /*--------------------Array  mul------------------*/
 #ifdef OPTIM_USE_EIGEN
@@ -171,6 +177,18 @@
 #define BMO_SQUARE_NORM(X) (X).squaredNorm()
 #elif OPTIM_USE_ARMA
 #define BMO_SQUARE_NORM(X) arma::dot(X, X)
+#endif
+/*------------------ Inf Norm ------------------*/
+#ifdef OPTIM_USE_EIGEN
+#define BMO_INF_NORM(X) (X).lpNorm<Infinity>()
+#elif OPTIM_USE_ARMA
+#define BMO_INF_NORM(X) arma::norm(X, "inf")
+#endif
+/*------------------ Lp Norm ------------------*/
+#ifdef OPTIM_USE_EIGEN
+#define BMO_LP_NORM(X, p) (X).lpNorm<p>()
+#elif OPTIM_USE_ARMA
+#define BMO_LP_NORM(X, p) arma::norm(X, p)
 #endif
 /*------------------(Frob) Norm ------------------*/
 #ifdef OPTIM_USE_EIGEN
