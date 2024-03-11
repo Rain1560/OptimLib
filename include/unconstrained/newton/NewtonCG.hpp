@@ -3,7 +3,7 @@
 #define _OPTIM_NEWTON_CG_HPP_
 
 #include "line_search/More_Thuente.hpp"
-#include "CG.ipp"
+#include "functions/functions.hpp"
 
 namespace optim
 {
@@ -34,7 +34,7 @@ namespace optim
         explicit NewtonCG(std::shared_ptr<Problem> prob)
         {
             this->prob = prob;
-            this->ls.reset(new MTLS<fp_t, false>());
+            this->ls = std::make_shared<MTLS<fp_t, false>>();
         }
 
         explicit NewtonCG(
@@ -47,7 +47,7 @@ namespace optim
 
         fp_t solve(Mat<fp_t> &x) override
         {
-            using namespace internal::NewtonCG;
+            using namespace fn;
             const int n = BMO_ROWS(x),
                       k = BMO_COLS(x),
                       nk = n * k;

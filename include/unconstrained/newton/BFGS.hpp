@@ -36,7 +36,7 @@ namespace optim
         explicit BFGS(std::shared_ptr<Problem> prob)
         {
             this->prob = prob;
-            this->ls.reset(new MTLS<fp_t, false>());
+            this->ls = std::make_shared<MTLS<fp_t, false>>();
         }
 
         explicit BFGS(
