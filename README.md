@@ -1,8 +1,6 @@
 # OptimLib &nbsp; 
 OptimLib is a C++ library of numerical optimization algorithms. It is designed to be a lightweight, efficient, and easy-to-use library for solving unconstrained and constrained optimization problems. The library is header-only with template classes and functions.
 
-[TOC]
-
 ## Overview
 
  - c++17 or later, c++20 is recommended.
