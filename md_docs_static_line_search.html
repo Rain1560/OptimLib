@@ -41,13 +41,6 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX","output/HTML-CSS"],
-});
-</script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
@@ -158,11 +151,11 @@ More-Thuente Line Search</h2>
 <p>The algorithm step is computed by the following steps:</p>
 <p>Denote $\alpha_l, \alpha_u, \alpha_t$ and there corresponding function values and derivatives as $f_l, f_u, f_t, g_l, g_u, g_t$. After step 4 below, we ensure that $f_l \leq f_u$. When the bracket is true, the minimum of $\phi$ is guaranteed to be within the interval $[\ \alpha_l, \alpha_u\ ]$.</p><ol type="1">
 <li>check if the current step satisfies the strong Wolfe conditions. If it does, update loss and gradient then return.</li>
-<li>If not, let \( \alpha_l = \alpha_u = 0, \alpha_t = t_k \) and <code>auxiliary = true</code>. Initialize the interval of uncertainty.</li>
-<li>select a trial value base on \( \alpha_l, \alpha_u, \alpha_t \) and their corresponding function values and derivatives. We force the step to be within the interval.</li>
-<li>use \( \alpha_t \) to update \( \alpha_l, \alpha_u\).</li>
-<li>check if \( \alpha_l \) satisfies the strong Wolfe conditions.</li>
-<li>let \( \alpha_t \) be the new trial step and update the function value and derivative.</li>
+<li>If not, let <img class="formulaInl" alt="$ \alpha_l = \alpha_u = 0, \alpha_t = t_k $" src="form_4.png"/> and <code>auxiliary = true</code>. Initialize the interval of uncertainty.</li>
+<li>select a trial value base on <img class="formulaInl" alt="$ \alpha_l, \alpha_u, \alpha_t $" src="form_5.png"/> and their corresponding function values and derivatives. We force the step to be within the interval.</li>
+<li>use <img class="formulaInl" alt="$ \alpha_t $" src="form_6.png"/> to update <img class="formulaInl" alt="$ \alpha_l, \alpha_u$" src="form_7.png"/>.</li>
+<li>check if <img class="formulaInl" alt="$ \alpha_l $" src="form_8.png"/> satisfies the strong Wolfe conditions.</li>
+<li>let <img class="formulaInl" alt="$ \alpha_t $" src="form_6.png"/> be the new trial step and update the function value and derivative.</li>
 <li>check if we should switch to "Modified Updating Method" and if bracket is true.</li>
 <li>update the interval of uncertainty, go to step 3.</li>
 </ol>
