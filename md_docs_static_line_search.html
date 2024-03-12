@@ -41,6 +41,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
@@ -128,19 +135,19 @@ $(document).ready(function(){initNavTree('md_docs_static_line_search.html',''); 
 </div>
 <div class="textblock"><h1><a class="anchor" id="autotoc_md15"></a>
 Algorithms Details</h1>
-<p>Below Line Search algorithms are trying to find a step $\alpha_k$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.</p>
-<p>We define 2 line search functions: $\phi(\alpha)=f(x+\alpha d)$ and auxiliary function $\psi(\alpha)=\phi(\alpha)-\phi(0)-\alpha\phi'(0)$.</p>
+<p>Below Line Search algorithms are trying to find a step \(\alpha_k \) that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.</p>
+<p>We define 2 line search functions: \(\phi(\alpha) = f(x + \alpha d)\) and auxiliary function \(\psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi&#39;(0)\).</p>
 <h2><a class="anchor" id="autotoc_md16"></a>
 Armijo Line Search</h2>
-<p>Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: $\phi(\alpha) \leq \phi(0) + c_1 \alpha \phi'(0)$. The algorithm step is computed by the following steps:</p>
+<p>Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: \(\phi(\alpha) \leq \phi(0) + c_1 \alpha \phi&#39;(0) \). The algorithm step is computed by the following steps:</p>
 <p>The back tracking algorithm is described as follows:</p><ol type="1">
-<li>check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor $\text{decay_rate} \in (0,1)$.</li>
+<li>check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor \(\text{decay_rate} \in (0, 1) \).</li>
 <li>repeat step 1 until the condition is satisfied or the maximum number of iterations is reached.</li>
 </ol>
 <h2><a class="anchor" id="autotoc_md17"></a>
 Zhang-Hager Line Search</h2>
 <p>Zhang-Hager line search is a non-monotone line search algorithm that satisfies the following condition:</p>
-<p>$$ \begin{align*} \phi(\alpha_k) &amp;\leq C_k + \rho \alpha_k \phi'(0) \newline C_k &amp;= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k}\newline Q_k &amp;= \gamma Q_{k-1} + 1 \end{align*} $$</p>
+<p>$$ \begin{align*} \phi(\alpha_k) &amp;\leq C_k + \rho \alpha_k \phi'(0) \newline C_k &amp;= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k} \newline Q_k &amp;= \gamma Q_{k-1} + 1 \end{align*} $$</p>
 <p>We using back tracking method like Armijo line search.</p>
 <h2><a class="anchor" id="autotoc_md18"></a>
 More-Thuente Line Search</h2>
@@ -149,13 +156,13 @@ More-Thuente Line Search</h2>
  \end{align*} \right. $$</p>
 <p>Note that $c_1$ should be close to 0 and $c_2$ should be close to 1. Otherwise it will be hard to find a step that satisfies the conditions.</p>
 <p>The algorithm step is computed by the following steps:</p>
-<p>Denote $\alpha_l, \alpha_u, \alpha_t$ and there corresponding function values and derivatives as $f_l, f_u, f_t, g_l, g_u, g_t$. After step 4 below, we ensure that $f_l \leq f_u$. When the bracket is true, the minimum of $\phi$ is guaranteed to be within the interval $[\ \alpha_l, \alpha_u\ ]$.</p><ol type="1">
+<p>Denote \(\alpha_l, \alpha_u, \alpha_t\) and there corresponding function values and derivatives as \(f_l, f_u, f_t, g_l, g_u, g_t\). After step 4 below, we ensure that \(f_l \leq f_u\). When the bracket is true, the minimum of \(\phi\) is guaranteed to be within the interval \([\ \alpha_l, \alpha_u\ ]\).</p><ol type="1">
 <li>check if the current step satisfies the strong Wolfe conditions. If it does, update loss and gradient then return.</li>
-<li>If not, let <img class="formulaInl" alt="$ \alpha_l = \alpha_u = 0, \alpha_t = t_k $" src="form_4.png"/> and <code>auxiliary = true</code>. Initialize the interval of uncertainty.</li>
-<li>select a trial value base on <img class="formulaInl" alt="$ \alpha_l, \alpha_u, \alpha_t $" src="form_5.png"/> and their corresponding function values and derivatives. We force the step to be within the interval.</li>
-<li>use <img class="formulaInl" alt="$ \alpha_t $" src="form_6.png"/> to update <img class="formulaInl" alt="$ \alpha_l, \alpha_u$" src="form_7.png"/>.</li>
-<li>check if <img class="formulaInl" alt="$ \alpha_l $" src="form_8.png"/> satisfies the strong Wolfe conditions.</li>
-<li>let <img class="formulaInl" alt="$ \alpha_t $" src="form_6.png"/> be the new trial step and update the function value and derivative.</li>
+<li>If not, let \( \alpha_l = \alpha_u = 0, \alpha_t = t_k \) and <code>auxiliary = true</code>. Initialize the interval of uncertainty.</li>
+<li>select a trial value base on \( \alpha_l, \alpha_u, \alpha_t \) and their corresponding function values and derivatives. We force the step to be within the interval.</li>
+<li>use \( \alpha_t \) to update \( \alpha_l, \alpha_u\).</li>
+<li>check if \( \alpha_l \) satisfies the strong Wolfe conditions.</li>
+<li>let \( \alpha_t \) be the new trial step and update the function value and derivative.</li>
 <li>check if we should switch to "Modified Updating Method" and if bracket is true.</li>
 <li>update the interval of uncertainty, go to step 3.</li>
 </ol>

@@ -41,6 +41,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
@@ -164,7 +171,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Args</b> = LineSearc
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a415c6a22c45e1bdf1d289126cd830806"><td class="memItemLeft" align="right" valign="top"><a id="a415c6a22c45e1bdf1d289126cd830806"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptim_1_1MTLineSearch.html#a415c6a22c45e1bdf1d289126cd830806">line_search</a> (Args &amp;arg) override</td></tr>
-<tr class="memdesc:a415c6a22c45e1bdf1d289126cd830806"><td class="mdescLeft">&#160;</td><td class="mdescRight">More-Thuente line search Algorithm implementation for efficiently invoke by taking less computing on f(x0), <img class="formulaInl" alt="$\nabla f(x0)$" src="form_0.png"/>. <br /></td></tr>
+<tr class="memdesc:a415c6a22c45e1bdf1d289126cd830806"><td class="mdescLeft">&#160;</td><td class="mdescRight">More-Thuente line search Algorithm implementation for efficiently invoke by taking less computing on f(x0), \(\nabla f(x0)\). <br /></td></tr>
 <tr class="separator:a415c6a22c45e1bdf1d289126cd830806"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1fddb1371bc17acbaa189e07825856e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptim_1_1MTLineSearch.html#ab1fddb1371bc17acbaa189e07825856e">success</a> () const override</td></tr>
 <tr class="memdesc:ab1fddb1371bc17acbaa189e07825856e"><td class="mdescLeft">&#160;</td><td class="mdescRight">whether the line search is successful  <a href="classoptim_1_1MTLineSearch.html#ab1fddb1371bc17acbaa189e07825856e">More...</a><br /></td></tr>

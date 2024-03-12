@@ -41,6 +41,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
@@ -220,7 +227,7 @@ std::shared_ptr&lt; Problem &gt;&#160;</td><td class="memItemRight" valign="bott
 class optim::ZHLineSearch&lt; fp_t, use_prox &gt;</h3>
 
 <p>Zhang-Hager line search. </p>
-<p>find a step [\alpha_k] such that <img class="formulaInl" alt="$ f(x_k + \alpha_k d) \leq C_k + \rho \alpha_k \nabla f(x_k)^T d $" src="form_1.png"/>, where <img class="formulaInl" alt="$ C_k = \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k} $" src="form_2.png"/>, <img class="formulaInl" alt="$ Q_k = \gamma Q_{k-1} + 1,\ C_0 = f(x_0) $" src="form_3.png"/>. </p>
+<p>find a step [\alpha_k] such that \( f(x_k + \alpha_k d) \leq C_k + \rho \alpha_k \nabla f(x_k)^T d \), where \( C_k = \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k} \), \( Q_k = \gamma Q_{k-1} + 1,\ C_0 = f(x_0) \). </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af853fbca994d7823c36c592323f8469f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af853fbca994d7823c36c592323f8469f">&#9670;&nbsp;</a></span>success()</h2>
