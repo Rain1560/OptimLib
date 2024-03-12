@@ -4,16 +4,16 @@
 
 ## Algorithms Details
 
-Below Line Search algorithms are trying to find a step $\alpha_k$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.
+Below Line Search algorithms are trying to find a step \f$\alpha_k \f$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.
 
-We define 2 line search functions: $\phi(\alpha)=f(x+\alpha d)$ and auxiliary function $\psi(\alpha)=\phi(\alpha)-\phi(0)-\alpha\phi'(0)$.
+We define 2 line search functions: \f$\phi(\alpha) = f(x + \alpha d)\f$ and auxiliary function \f$\psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi'(0)\f$.
 
 ### Armijo Line Search
 
-Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: $\phi(\alpha) \leq \phi(0) + c_1 \alpha \phi'(0)$. The algorithm step is computed by the following steps:
+Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: \f$\phi(\alpha) \leq \phi(0) + c_1 \alpha \phi'(0) \f$. The algorithm step is computed by the following steps:
 
 The back tracking algorithm is described as follows:
-1. check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor $\text{decay\_rate} \in (0,1)$.
+1. check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor \f$\text{decay_rate} \in (0, 1) \f$.
 2. repeat step 1 until the condition is satisfied or the maximum number of iterations is reached.
 
 ### Zhang-Hager Line Search
@@ -23,7 +23,7 @@ Zhang-Hager line search is a non-monotone line search algorithm that satisfies t
 $$
 \begin{align*}
 \phi(\alpha_k) &\leq C_k + \rho \alpha_k \phi'(0) \newline
-C_k &= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k}\newline
+C_k &= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k} \newline
 Q_k &= \gamma Q_{k-1} + 1
 \end{align*}
 $$
@@ -48,7 +48,7 @@ Note that $c_1$ should be close to 0 and $c_2$ should be close to 1. Otherwise i
 
 The algorithm step is computed by the following steps:
 
-Denote $\alpha_l, \alpha_u, \alpha_t$ and there corresponding function values and derivatives as $f_l, f_u, f_t, g_l, g_u, g_t$. After step 4 below, we ensure that $f_l \leq f_u$. When the bracket is true, the minimum of $\phi$ is guaranteed to be within the interval $[\ \alpha_l, \alpha_u\ ]$.
+Denote \f$\alpha_l, \alpha_u, \alpha_t\f$ and there corresponding function values and derivatives as \f$f_l, f_u, f_t, g_l, g_u, g_t\f$. After step 4 below, we ensure that \f$f_l \leq f_u\f$. When the bracket is true, the minimum of \f$\phi\f$ is guaranteed to be within the interval \f$[\ \alpha_l, \alpha_u\ ]\f$.
 1. check if the current step satisfies the strong Wolfe conditions. If it does, update loss and gradient then return.
 2. If not, let \f$ \alpha_l = \alpha_u = 0, \alpha_t = t_k \f$ and `auxiliary = true`. Initialize the interval of uncertainty.
 3. select a trial value base on \f$ \alpha_l, \alpha_u, \alpha_t \f$ and their corresponding function values and derivatives. We force the step to be within the interval.
