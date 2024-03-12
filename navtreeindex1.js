@@ -1,0 +1,22 @@
+var NAVTREEINDEX1 =
+{
+"structoptim_1_1RMSProp.html#a54a04349ca7a00666c05781f342aff69":[2,0,0,21,8],
+"structoptim_1_1RMSProp.html#a7eb6c472c60db489261f83b18e40a49a":[2,0,0,21,5],
+"structoptim_1_1RMSProp.html#a9326f4976a35ab74b15a5c2733ffa4f1":[2,0,0,21,0],
+"structoptim_1_1RMSProp.html#af2217c9b95f381525e436401f1edf8be":[2,0,0,21,2],
+"structoptim_1_1RMSProp.html#af3c33898e40e122fe85d4d3002ee167e":[2,0,0,21,1],
+"structoptim_1_1RMSProp.html#afaaf907ca5ed5f4c64cbb4ce3619dc85":[2,0,0,21,6],
+"structoptim_1_1StepScheduler.html":[2,0,0,24],
+"structoptim_1_1StepScheduler.html#a350b03373bff1f873b8a1975b2f9de59":[2,0,0,24,0],
+"structoptim_1_1StepScheduler.html#aad0e04774192eb3c49bb2a351a8071f8":[2,0,0,24,2],
+"structoptim_1_1StepScheduler.html#ae8f4136acec6ee1a744ce184b28c6a02":[2,0,0,24,1],
+"structoptim_1_1internal_1_1ProxOperator.html":[2,0,0,3,0],
+"structoptim_1_1internal_1_1ProxOperator.html#a61d88c382aa5dc180adc19385854324e":[2,0,0,3,0,3],
+"structoptim_1_1internal_1_1ProxOperator.html#a6f92b5f45546c07ec486498f6bfa93f4":[2,0,0,3,0,2],
+"structoptim_1_1internal_1_1ProxOperator.html#aa66632791ab4347afc73389ad15f2728":[2,0,0,3,0,1],
+"structoptim_1_1internal_1_1ProxOperator.html#ab93480a18e13f1e54375e78bc13ca539":[2,0,0,3,0,0],
+"structoptim_1_1internal_1_1ProxWrapper.html":[2,0,0,3,1],
+"structoptim_1_1internal_1_1ProxWrapper.html#afebd9b1e164cd6b59bf60df3daab9822":[2,0,0,3,1,0],
+"structoptim_1_1internal_1_1ProxWrapper_3_01fp__t_00_01Problem_00_01true_01_4.html":[2,0,0,3,2],
+"structoptim_1_1internal_1_1ProxWrapper_3_01fp__t_00_01Problem_00_01true_01_4.html#ac855f493b6101a4ec3f64a98758ce46e":[2,0,0,3,2,0]
+};
