@@ -4,4 +4,4 @@ lib
 build
 *hw*
 src
-docs/latex
+html

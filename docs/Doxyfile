@@ -105,7 +105,7 @@ SHOW_USED_FILES        = NO
 SHOW_FILES             = NO
 SHOW_NAMESPACES        = YES
 FILE_VERSION_FILTER    =
-LAYOUT_FILE            = ./DoxygenLayout.xml
+LAYOUT_FILE            = docs/DoxygenLayout.xml
 CITE_BIB_FILES         =
 #---------------------------------------------------------------------------
 # Configuration options related to warning and progress messages
@@ -124,7 +124,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../include ../README.md ./static/header.html ./static/footer.html
+INPUT                  = include README.md docs/static/header.html docs/static/footer.html
 INPUT_ENCODING         = UTF-8
 INPUT_FILE_ENCODING    =
 FILE_PATTERNS          = *.c \
@@ -190,7 +190,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 FILTER_SOURCE_PATTERNS =
-USE_MDFILE_AS_MAINPAGE = ../README.md
+USE_MDFILE_AS_MAINPAGE = README.md
 FORTRAN_COMMENT_AFTER  = 72
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
@@ -219,14 +219,14 @@ IGNORE_PREFIX          =
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_HEADER            = ./static/header.html
-HTML_FOOTER            = ./static/footer.html
+HTML_HEADER            = docs/static/header.html
+HTML_FOOTER            = docs/static/footer.html
 HTML_STYLESHEET        =
 HTML_EXTRA_STYLESHEET  = \
-doxygen-awesome-css/doxygen-awesome.css \
-doxygen-awesome-css/doxygen-awesome-sidebar-only-darkmode-toggle.css
+docs/doxygen-awesome-css/doxygen-awesome.css \
+docs/doxygen-awesome-css/doxygen-awesome-sidebar-only-darkmode-toggle.css
 HTML_EXTRA_FILES       = \
-doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js
+docs/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js
 HTML_COLORSTYLE        = AUTO_LIGHT
 HTML_COLORSTYLE_HUE    = 220
 HTML_COLORSTYLE_SAT    = 100
