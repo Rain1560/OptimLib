@@ -6,14 +6,14 @@
 
 Below Line Search algorithms are trying to find a step $\alpha_k$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.
 
-We define 2 line search functions: $\phi(\alpha) = f(x + \alpha d)$ and auxiliary function $\psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi'(0)$.
+We define 2 line search functions: $\phi(\alpha)=f(x+\alpha d)$ and auxiliary function $\psi(\alpha)=\phi(\alpha)-\phi(0)-\alpha\phi'(0)$.
 
 ### Armijo Line Search
 
 Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: $\phi(\alpha) \leq \phi(0) + c_1 \alpha \phi'(0)$. The algorithm step is computed by the following steps:
 
 The back tracking algorithm is described as follows:
-1. check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor $\text{decay\_rate} \in (0, 1)$.
+1. check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor $\text{decay\_rate} \in (0,1)$.
 2. repeat step 1 until the condition is satisfied or the maximum number of iterations is reached.
 
 ### Zhang-Hager Line Search
@@ -22,8 +22,8 @@ Zhang-Hager line search is a non-monotone line search algorithm that satisfies t
 
 $$
 \begin{align*}
-\phi(\alpha_k) &\leq C_k + \rho \alpha_k \phi'(0) \\
-C_k &= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k}\\
+\phi(\alpha_k) &\leq C_k + \rho \alpha_k \phi'(0) \newline
+C_k &= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k}\newline
 Q_k &= \gamma Q_{k-1} + 1
 \end{align*}
 $$
@@ -37,8 +37,8 @@ The More-Thuente line search algorithm is a line search algorithm that satisfies
 $$
 \left\{
 \begin{align*}
-\phi(\alpha) &\leq \phi(0) + c_1 \alpha \phi'(0) \\
-|\phi'(\alpha)| &\leq c_2 |\phi'(0)| \\
+\phi(\alpha) &\leq \phi(0) + c_1 \alpha \phi'(0) \newline
+|\phi'(\alpha)| &\leq c_2 |\phi'(0)| \newline
 c_1 \in (0, \frac{1}{2}) &\quad c_2 \in (0, 1)    
 \end{align*}
 \right.
