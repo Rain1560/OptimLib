@@ -85,6 +85,13 @@ namespace optim
             prob->grad(this->cur_x, this->cur_grad);
         }
 
+        /// @brief norm of the current gradient
+        OPTIM_STRONG_INLINE fp_t
+        grad_norm() const
+        {
+            return BMO_FRO_NORM(this->cur_grad);
+        }
+
         /// @brief Flush the current state to the previous state
         OPTIM_STRONG_INLINE
         void flush()
@@ -173,6 +180,13 @@ namespace optim
             cur_grad_map = this->cur_x - this->step * this->cur_grad;
             prob->prox(this->step, cur_grad_map, tmp);
             cur_grad_map = (this->cur_x - tmp) / this->step;
+        }
+
+        /// @brief norm of the current gradient
+        OPTIM_STRONG_INLINE fp_t
+        grad_norm() const
+        {
+            return BMO_FRO_NORM(this->cur_grad_map);
         }
 
         /// @brief Flush the current state to the previous state
