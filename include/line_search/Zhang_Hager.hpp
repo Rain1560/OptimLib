@@ -2,11 +2,7 @@
 #ifndef _OPTIM_ZHANG_HAGER_HPP_
 #define _OPTIM_ZHANG_HAGER_HPP_
 
-/**
- * \page ZHLineSearch Zhang-Hager Line Search
- * \par
- * Zhang-Hager line search is a non-monotone line search algorithm that satisfies the following condition: \f$ f(x_k + \alpha_k d) \leq C_k + \rho \alpha_k \nabla f(x_k)^T d \f$, where \f$ C_k = \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k} \f$, \f$ Q_k = \gamma Q_{k-1} + 1,\ C_0 = f(x_0) \f$.
- */
+
 
 #include "base.hpp"
 

@@ -124,7 +124,10 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = include README.md docs/static/header.html docs/static/footer.html
+INPUT                  = include \
+                         README.md \
+                         docs/static/problem.md \
+                         docs/static/line_search.md
 INPUT_ENCODING         = UTF-8
 INPUT_FILE_ENCODING    =
 FILE_PATTERNS          = *.c \
@@ -219,8 +222,8 @@ IGNORE_PREFIX          =
 GENERATE_HTML          = YES
 HTML_OUTPUT            = docs/html
 HTML_FILE_EXTENSION    = .html
-HTML_HEADER            = docs/static/header.html
-HTML_FOOTER            = docs/static/footer.html
+HTML_HEADER            = docs/doxygen-awesome-css/doxygen-custom/header.html
+HTML_FOOTER            =
 HTML_STYLESHEET        =
 HTML_EXTRA_STYLESHEET  = \
 docs/doxygen-awesome-css/doxygen-awesome.css \

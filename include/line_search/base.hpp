@@ -4,23 +4,13 @@
 
 #include "base/BaseSolver.hpp"
 
-/**
- * \page line_search Line Search
- * \par
- * Below Line Search algorithms are trying to find a step \f$ t_k \f$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.
- * \par
- * We define 2 line search functions: \f$ \phi(\alpha) = f(x + \alpha d) \f$ and auxiliary function \f$ \psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi'(0) \f$.
- *
- * # Armijo Line Search
- * \copydoc ArmijoLineSearch
- * # Zhang-Hager Line Search
- * \copydoc ZHLineSearch
- * # More-Thuente Line Search
- * \copydoc MTLineSearch
- */
 
 namespace optim
 {
+    /// @class BaseLineSearchArgs
+    /// @anchor ddd
+    /// @brief Base class for line search arguments
+    /// @tparam fp_t floating-point type
     template <typename fp_t>
     struct BaseLineSearchArgs
     {

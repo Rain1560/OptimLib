@@ -17,11 +17,12 @@ namespace optim
     };
     /// @endcond
 
+    /// @class BaseProblem
     /// @brief Base problem interface
     template <typename fp_t>
     struct BaseProblem
     {
-        /// @brief loss function
+        /// @brief loss function that needs to be minimized.
         /// @param in_x the point to evaluate
         virtual fp_t loss(
             const Mat<fp_t> &in_x) = 0;
@@ -32,7 +33,7 @@ namespace optim
     struct GradProblem
         : public BaseProblem<fp_t>
     {
-        /// @brief gradient function
+        /// @brief gradient function that computes the gradient of the loss function
         /// @param in_x the point to evaluate
         /// @param out_x the output gradient
         virtual void grad(
@@ -44,7 +45,7 @@ namespace optim
     struct HessProblem
         : public GradProblem<fp_t>
     {
-        /// @brief Hessian function
+        /// @brief Hessian function that computes the Hessian of the loss function
         /// @details the in_x may not be a vector, so you need to treat a matrix as a vector. i.e. your Hessian matrix should be matched with resize(in_x,size(in_x),1).
         /// @param in_x  the point to evaluate
         /// @param out_x  the output Hessian
