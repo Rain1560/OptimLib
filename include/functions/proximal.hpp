@@ -1,3 +1,9 @@
+/// @brief proximal operator for vector norm
+/// @tparam fp_t floating-point type
+/// @tparam p order of the norm
+/// @param step step size
+/// @param in_x input x
+/// @param out output
 template <int p, typename fp_t>
 void prox(fp_t step, const Mat<fp_t> &in_x, Mat<fp_t> &out)
 {
