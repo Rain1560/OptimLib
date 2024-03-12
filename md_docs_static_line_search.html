@@ -136,23 +136,23 @@ $(document).ready(function(){initNavTree('md_docs_static_line_search.html',''); 
 <div class="textblock"><h1><a class="anchor" id="autotoc_md15"></a>
 Algorithms Details</h1>
 <p>Below Line Search algorithms are trying to find a step $\alpha_k$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.</p>
-<p>We define 2 line search functions: $\phi(\alpha) = f(x + \alpha d)$ and auxiliary function $\psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi'(0)$.</p>
+<p>We define 2 line search functions: $\phi(\alpha)=f(x+\alpha d)$ and auxiliary function $\psi(\alpha)=\phi(\alpha)-\phi(0)-\alpha\phi'(0)$.</p>
 <h2><a class="anchor" id="autotoc_md16"></a>
 Armijo Line Search</h2>
 <p>Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: $\phi(\alpha) \leq \phi(0) + c_1 \alpha \phi'(0)$. The algorithm step is computed by the following steps:</p>
 <p>The back tracking algorithm is described as follows:</p><ol type="1">
-<li>check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor $\text{decay_rate} \in (0, 1)$.</li>
+<li>check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor $\text{decay_rate} \in (0,1)$.</li>
 <li>repeat step 1 until the condition is satisfied or the maximum number of iterations is reached.</li>
 </ol>
 <h2><a class="anchor" id="autotoc_md17"></a>
 Zhang-Hager Line Search</h2>
 <p>Zhang-Hager line search is a non-monotone line search algorithm that satisfies the following condition:</p>
-<p>$$ \begin{align*} \phi(\alpha_k) &amp;\leq C_k + \rho \alpha_k \phi'(0) \ C_k &amp;= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k}\ Q_k &amp;= \gamma Q_{k-1} + 1 \end{align*} $$</p>
+<p>$$ \begin{align*} \phi(\alpha_k) &amp;\leq C_k + \rho \alpha_k \phi'(0) \newline C_k &amp;= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k}\newline Q_k &amp;= \gamma Q_{k-1} + 1 \end{align*} $$</p>
 <p>We using back tracking method like Armijo line search.</p>
 <h2><a class="anchor" id="autotoc_md18"></a>
 More-Thuente Line Search</h2>
 <p>The More-Thuente line search algorithm is a line search algorithm that satisfies the strong Wolfe conditions:</p>
-<p>$$ \left\{ \begin{align*} \phi(\alpha) &amp;\leq \phi(0) + c_1 \alpha \phi'(0) \ |\phi'(\alpha)| &amp;\leq c_2 |\phi'(0)| \ c_1 \in (0, \frac{1}{2}) &amp;\quad c_2 \in (0, 1) <br  />
+<p>$$ \left\{ \begin{align*} \phi(\alpha) &amp;\leq \phi(0) + c_1 \alpha \phi'(0) \newline |\phi'(\alpha)| &amp;\leq c_2 |\phi'(0)| \newline c_1 \in (0, \frac{1}{2}) &amp;\quad c_2 \in (0, 1) <br  />
  \end{align*} \right. $$</p>
 <p>Note that $c_1$ should be close to 0 and $c_2$ should be close to 1. Otherwise it will be hard to find a step that satisfies the conditions.</p>
 <p>The algorithm step is computed by the following steps:</p>
