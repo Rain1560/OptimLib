@@ -1,18 +1,38 @@
-<!-- HTML header for doxygen 1.9.8-->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="$langISO">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Doxygen Awesome" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Custom CSS theme for doxygen html-documentation with lots of customization parameters." />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="Doxygen Awesome" />
+<meta name="twitter:description" content="Custom CSS theme for doxygen html-documentation with lots of customization parameters." />
+<!-- END twitter metadata -->
 <title>OptimLib: include/line_search/Zhang_Hager.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
 <script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
     DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
@@ -28,39 +48,26 @@
 });
 </script>
 <script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
-$darkmode
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/jothepro/doxygen-awesome-css" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr id="projectrow">
-  <td id="projectalign">
-   <div id="projectname">OptimLib<span id="projectnumber">&#160;1.0.0</span>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">OptimLib
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
   </td>
  </tr>
-   <!--BEGIN FULL_SIDEBAR-->
-   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.svg"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
-          </span>
-        </div>
-</td></tr>
-   <!--END FULL_SIDEBAR-->
  </tbody>
 </table>
 </div>
@@ -121,119 +128,120 @@ $(document).ready(function(){initNavTree('Zhang__Hager_8hpp_source.html',''); in
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef _OPTIM_ZHANG_HAGER_HPP_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define _OPTIM_ZHANG_HAGER_HPP_</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;base.hpp&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>optim</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> fp_t = double,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;              <span class="keywordtype">bool</span> use_prox = <span class="keyword">false</span>&gt;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html">   19</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classoptim_1_1ZHLineSearch.html">ZHLineSearch</a> final</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        : <span class="keyword">public</span> <a class="code" href="structoptim_1_1LineSearch.html">LineSearch</a>&lt;fp_t, use_prox&gt;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">using</span> Problem = <span class="keyword">typename</span> LineSearch&lt;fp_t, use_prox&gt;::Problem;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">using</span> Args = LineSearchArgs&lt;fp_t, use_prox&gt;;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;base.hpp&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>optim</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> fp_t = double,</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;              <span class="keywordtype">bool</span> use_prox = <span class="keyword">false</span>&gt;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html">   15</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classoptim_1_1ZHLineSearch.html">ZHLineSearch</a> final</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        : <span class="keyword">public</span> <a class="code" href="structoptim_1_1LineSearch.html">LineSearch</a>&lt;fp_t, use_prox&gt;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">using</span> Problem = <span class="keyword">typename</span> LineSearch&lt;fp_t, use_prox&gt;::Problem;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">using</span> Args = LineSearchArgs&lt;fp_t, use_prox&gt;;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">int</span> iter = 0;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        fp_t pQ = 0, Q = 1, Cval;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">int</span> iter = 0;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        fp_t pQ = 0, Q = 1, Cval;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">   31</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">max_iter</a> = 10; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">   32</a></span>&#160;        fp_t <a class="code" href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">pho</a> = 1e-3;   </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        fp_t gamma = 0.85;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">   34</a></span>&#160;        fp_t <a class="code" href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">decay_rate</a> = 0.1; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">int</span> status = 0;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> init(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            std::shared_ptr&lt;Problem&gt; p, Args &amp;arg)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            this-&gt;prob = p;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            this-&gt;Cval = arg.cur_loss;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> line_search(Args &amp;arg)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            optim_assert(arg.step &gt; 0, <span class="stringliteral">&quot;step must be positive.&quot;</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            iter = 0; <span class="comment">// reset iter</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            fp_t dTg; <span class="comment">// d.dot(g) in sm prob or</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="comment">// or (cur_x - prev_x) / step .dot(g_grad_map) in nsm prob</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="comment">// begin line search</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">for</span> (iter = 1; iter &lt;= <a class="code" href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">max_iter</a>; iter++)</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                arg.step_forward(this-&gt;prob.get());</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                arg.update_cur_loss(this-&gt;prob.get());</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keywordflow">if</span> constexpr (use_prox)</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                    arg.update_prev_grad_map(this-&gt;prob.get());</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                    arg.tmp = arg.cur_x - arg.prev_x;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                    dTg = BMO_MAT_DOT_PROD(</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                              arg.tmp, arg.prev_grad_map) /</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                          arg.step;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                    dTg = BMO_MAT_DOT_PROD(arg.direction, arg.prev_grad);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                optim_assert(dTg &lt; 0, <span class="stringliteral">&quot;dTg must be negtive.&quot;</span>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                <span class="keywordflow">if</span> (arg.cur_loss &lt;= Cval + <a class="code" href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">pho</a> * arg.step * dTg ||</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    arg.step == this-&gt;min_step)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                    <span class="comment">// update pQ, Q, Cval</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                    pQ = Q, Q = gamma * Q + 1;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                    Cval = (gamma * pQ * Cval + arg.cur_loss) / Q;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                    <span class="keywordflow">goto</span> over;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                arg.step *= <a class="code" href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">decay_rate</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <span class="comment">// force step larger than min_step</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="keywordflow">if</span> (arg.step &lt; this-&gt;min_step)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    arg.step = this-&gt;<a class="code" href="structoptim_1_1LineSearch.html#a4a30763ae4685ebe68ce642eeb22c8c7">min_step</a>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="comment">// if line search failed, use the min step</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="comment">// and give a warning(TODO)</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            arg.step = this-&gt;<a class="code" href="structoptim_1_1LineSearch.html#a4a30763ae4685ebe68ce642eeb22c8c7">min_step</a>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            arg.step_forward(this-&gt;prob.get());</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            arg.update_cur_loss(this-&gt;prob.get());</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        over:</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keywordflow">if</span> (this-&gt;update_cur_grad)</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                arg.update_cur_grad(this-&gt;prob.get());</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                <span class="keywordflow">if</span> constexpr (use_prox)</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                    arg.update_cur_grad_map(this-&gt;prob.get());</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        };</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#af853fbca994d7823c36c592323f8469f">   97</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classoptim_1_1ZHLineSearch.html#af853fbca994d7823c36c592323f8469f">success</a>()<span class="keyword"> const override</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> status == 0;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordtype">int</span> n_iter()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordflow">return</span> iter;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    };</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">   27</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">max_iter</a> = 10; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">   28</a></span>&#160;        fp_t <a class="code" href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">pho</a> = 1e-3;   </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        fp_t gamma = 0.85;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">   30</a></span>&#160;        fp_t <a class="code" href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">decay_rate</a> = 0.1; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">int</span> status = 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordtype">void</span> init(</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            std::shared_ptr&lt;Problem&gt; p, Args &amp;arg)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            this-&gt;prob = p;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            this-&gt;Cval = arg.cur_loss;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> line_search(Args &amp;arg)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            optim_assert(arg.step &gt; 0, <span class="stringliteral">&quot;step must be positive.&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            iter = 0; <span class="comment">// reset iter</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            fp_t dTg; <span class="comment">// d.dot(g) in sm prob or</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="comment">// or (cur_x - prev_x) / step .dot(g_grad_map) in nsm prob</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="comment">// begin line search</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keywordflow">for</span> (iter = 1; iter &lt;= <a class="code" href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">max_iter</a>; iter++)</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                arg.step_forward(this-&gt;prob.get());</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                arg.update_cur_loss(this-&gt;prob.get());</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                <span class="keywordflow">if</span> constexpr (use_prox)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                    arg.update_prev_grad_map(this-&gt;prob.get());</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                    arg.tmp = arg.cur_x - arg.prev_x;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                    dTg = BMO_MAT_DOT_PROD(</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                              arg.tmp, arg.prev_grad_map) /</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                          arg.step;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                    dTg = BMO_MAT_DOT_PROD(arg.direction, arg.prev_grad);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                optim_assert(dTg &lt; 0, <span class="stringliteral">&quot;dTg must be negtive.&quot;</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                <span class="keywordflow">if</span> (arg.cur_loss &lt;= Cval + <a class="code" href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">pho</a> * arg.step * dTg ||</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                    arg.step == this-&gt;min_step)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                    <span class="comment">// update pQ, Q, Cval</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    pQ = Q, Q = gamma * Q + 1;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    Cval = (gamma * pQ * Cval + arg.cur_loss) / Q;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    <span class="keywordflow">goto</span> over;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                arg.step *= <a class="code" href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">decay_rate</a>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="comment">// force step larger than min_step</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                <span class="keywordflow">if</span> (arg.step &lt; this-&gt;min_step)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                    arg.step = this-&gt;<a class="code" href="structoptim_1_1LineSearch.html#a4a30763ae4685ebe68ce642eeb22c8c7">min_step</a>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="comment">// if line search failed, use the min step</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="comment">// and give a warning(TODO)</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            arg.step = this-&gt;<a class="code" href="structoptim_1_1LineSearch.html#a4a30763ae4685ebe68ce642eeb22c8c7">min_step</a>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            arg.step_forward(this-&gt;prob.get());</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            arg.update_cur_loss(this-&gt;prob.get());</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        over:</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">if</span> (this-&gt;update_cur_grad)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                arg.update_cur_grad(this-&gt;prob.get());</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                <span class="keywordflow">if</span> constexpr (use_prox)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                    arg.update_cur_grad_map(this-&gt;prob.get());</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        };</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classoptim_1_1ZHLineSearch.html#af853fbca994d7823c36c592323f8469f">   93</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classoptim_1_1ZHLineSearch.html#af853fbca994d7823c36c592323f8469f">success</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keywordflow">return</span> status == 0;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">int</span> n_iter()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> iter;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    };</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> fp_t = <span class="keywordtype">double</span>, <span class="keywordtype">bool</span> use_prox = false&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">using</span> ZHLS = ZHLineSearch&lt;fp_t, use_prox&gt;;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> fp_t = <span class="keywordtype">double</span>, <span class="keywordtype">bool</span> use_prox = false&gt;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">using</span> ZHLS = ZHLineSearch&lt;fp_t, use_prox&gt;;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">// #ifdef OPTIM_HEADER_ONLY</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">// #include &quot;line_search/Zhang_Hager.hpp&quot;</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">// #endif</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">// #ifdef OPTIM_HEADER_ONLY</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">// #include &quot;line_search/Zhang_Hager.hpp&quot;</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">// #endif</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html">optim::ZHLineSearch</a></div><div class="ttdoc">Zhang-Hager line search.</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:21</div></div>
-<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_ab229c9c9663143d72e9dff3c4268c631"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">optim::ZHLineSearch::pho</a></div><div class="ttdeci">fp_t pho</div><div class="ttdoc">sufficient decrease parameter in line search</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:32</div></div>
-<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_abe0fd8bb88b16253a0157330d38044f7"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">optim::ZHLineSearch::max_iter</a></div><div class="ttdeci">int max_iter</div><div class="ttdoc">max iter of line search</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:31</div></div>
-<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_aeecd1eae548564551f2dfb3da38816b7"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">optim::ZHLineSearch::decay_rate</a></div><div class="ttdeci">fp_t decay_rate</div><div class="ttdoc">decay rate of step length in line search</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:34</div></div>
-<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_af853fbca994d7823c36c592323f8469f"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#af853fbca994d7823c36c592323f8469f">optim::ZHLineSearch::success</a></div><div class="ttdeci">bool success() const override</div><div class="ttdoc">whether the line search is successful</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:97</div></div>
-<div class="ttc" id="astructoptim_1_1LineSearch_html"><div class="ttname"><a href="structoptim_1_1LineSearch.html">optim::LineSearch</a></div><div class="ttdoc">Line search base class.</div><div class="ttdef"><b>Definition:</b> base.hpp:211</div></div>
-<div class="ttc" id="astructoptim_1_1LineSearch_html_a4a30763ae4685ebe68ce642eeb22c8c7"><div class="ttname"><a href="structoptim_1_1LineSearch.html#a4a30763ae4685ebe68ce642eeb22c8c7">optim::LineSearch&lt; double, false &gt;::min_step</a></div><div class="ttdeci">double min_step</div><div class="ttdoc">minimum step size</div><div class="ttdef"><b>Definition:</b> base.hpp:223</div></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html">optim::ZHLineSearch</a></div><div class="ttdoc">Zhang-Hager line search.</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:17</div></div>
+<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_ab229c9c9663143d72e9dff3c4268c631"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#ab229c9c9663143d72e9dff3c4268c631">optim::ZHLineSearch::pho</a></div><div class="ttdeci">fp_t pho</div><div class="ttdoc">sufficient decrease parameter in line search</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:28</div></div>
+<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_abe0fd8bb88b16253a0157330d38044f7"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#abe0fd8bb88b16253a0157330d38044f7">optim::ZHLineSearch::max_iter</a></div><div class="ttdeci">int max_iter</div><div class="ttdoc">max iter of line search</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:27</div></div>
+<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_aeecd1eae548564551f2dfb3da38816b7"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#aeecd1eae548564551f2dfb3da38816b7">optim::ZHLineSearch::decay_rate</a></div><div class="ttdeci">fp_t decay_rate</div><div class="ttdoc">decay rate of step length in line search</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:30</div></div>
+<div class="ttc" id="aclassoptim_1_1ZHLineSearch_html_af853fbca994d7823c36c592323f8469f"><div class="ttname"><a href="classoptim_1_1ZHLineSearch.html#af853fbca994d7823c36c592323f8469f">optim::ZHLineSearch::success</a></div><div class="ttdeci">bool success() const override</div><div class="ttdoc">whether the line search is successful</div><div class="ttdef"><b>Definition:</b> Zhang_Hager.hpp:93</div></div>
+<div class="ttc" id="astructoptim_1_1LineSearch_html"><div class="ttname"><a href="structoptim_1_1LineSearch.html">optim::LineSearch</a></div><div class="ttdoc">Line search base class.</div><div class="ttdef"><b>Definition:</b> base.hpp:201</div></div>
+<div class="ttc" id="astructoptim_1_1LineSearch_html_a4a30763ae4685ebe68ce642eeb22c8c7"><div class="ttname"><a href="structoptim_1_1LineSearch.html#a4a30763ae4685ebe68ce642eeb22c8c7">optim::LineSearch&lt; double, false &gt;::min_step</a></div><div class="ttdeci">double min_step</div><div class="ttdoc">minimum step size</div><div class="ttdef"><b>Definition:</b> base.hpp:213</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<!-- HTML footer for doxygen 1.9.8-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

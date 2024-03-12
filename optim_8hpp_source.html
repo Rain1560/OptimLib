@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Doxygen Awesome" />
 <meta name="twitter:description" content="Custom CSS theme for doxygen html-documentation with lots of customization parameters." />
 <!-- END twitter metadata -->
-<title>OptimLib: Member List</title>
+<title>OptimLib: include/optim.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -101,7 +101,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('structoptim_1_1GDAccelerator.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('optim_8hpp_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,22 +121,38 @@ $(document).ready(function(){initNavTree('structoptim_1_1GDAccelerator.html','')
 
 <div class="header">
   <div class="headertitle">
-<div class="title">optim::GDAccelerator&lt; fp_t &gt; Member List</div>  </div>
+<div class="title">optim.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>BaseArgs</b> typedef (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>GradFunc</b> typedef (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>init</b>(BaseArgs &amp;) (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>release</b>() (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>update</b>(int iter, GradFunc grad_f, BaseArgs &amp;arg) (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _OPTIM_LIB_HPP_</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _OPTIM_LIB_HPP_</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;macro/macro.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;macro/BasicMatrixOp.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;base/BaseSolver.hpp&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;base/Recorder.hpp&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;line_search/Armijo.hpp&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;line_search/More_Thuente.hpp&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;line_search/Zhang_Hager.hpp&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;unconstrained/gradient/Gradient_Descent.hpp&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;unconstrained/newton/BFGS.hpp&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;unconstrained/newton/LBFGS.hpp&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;unconstrained/newton/NewtonLDLT.hpp&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;unconstrained/newton/NewtonCG.hpp&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;constrained/ALM.hpp&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>optim.hpp</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

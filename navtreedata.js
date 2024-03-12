@@ -26,11 +26,28 @@ var NAVTREE =
 [
   [ "OptimLib", "index.html", [
     [ "OptimLib  ", "index.html", [
-      [ "Overview", "index.html#autotoc_md4", null ],
-      [ "Installation", "index.html#autotoc_md5", null ],
-      [ "Usage", "index.html#autotoc_md6", null ]
+      [ "Overview", "index.html#autotoc_md1", null ],
+      [ "Installation", "index.html#autotoc_md2", null ],
+      [ "Usage", "index.html#autotoc_md3", null ]
     ] ],
-    [ "Problem of Solver", "Problem.html", null ],
+    [ "Problem", "md_docs_static_problem.html", [
+      [ "Unconstrained Optimization", "md_docs_static_problem.html#autotoc_md8", [
+        [ "Gradient Descent", "md_docs_static_problem.html#autotoc_md9", null ],
+        [ "(Quasi)Newton's Method", "md_docs_static_problem.html#autotoc_md10", null ],
+        [ "Newton's Method", "md_docs_static_problem.html#autotoc_md11", null ]
+      ] ],
+      [ "Constrained Optimization", "md_docs_static_problem.html#autotoc_md12", [
+        [ "Augmented Lagrangian Method", "md_docs_static_problem.html#autotoc_md13", null ]
+      ] ]
+    ] ],
+    [ "Line Search", "md_docs_static_line_search.html", [
+      [ "Algorithms Details", "md_docs_static_line_search.html#autotoc_md15", [
+        [ "Armijo Line Search", "md_docs_static_line_search.html#autotoc_md16", null ],
+        [ "Zhang-Hager Line Search", "md_docs_static_line_search.html#autotoc_md17", null ],
+        [ "More-Thuente Line Search", "md_docs_static_line_search.html#autotoc_md18", null ]
+      ] ],
+      [ "Usage", "md_docs_static_line_search.html#autotoc_md19", null ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -46,8 +63,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"Problem.html",
-"structoptim_1_1RMSProp.html#a54a04349ca7a00666c05781f342aff69"
+"annotated.html",
+"structoptim_1_1LineSearchArgs_3_01fp__t_00_01true_01_4.html#aff416744922a5f51c98ba050ac976d07"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

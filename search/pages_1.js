@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['line_20search_171',['Line Search',['../line_search.html',1,'']]]
+  ['optimlib_20_26nbsp_3b_169',['OptimLib &amp;nbsp;',['../index.html',1,'']]]
 ];

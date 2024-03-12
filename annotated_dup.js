@@ -1,9 +1,9 @@
 var annotated_dup =
 [
     [ "optim", null, [
-      [ "Implement Problem Class", "index.html#autotoc_md7", null ],
-      [ "Create corresponding solver", "index.html#autotoc_md8", null ],
-      [ "Compile and run", "index.html#autotoc_md9", null ],
+      [ "Implement Problem Class", "index.html#autotoc_md4", null ],
+      [ "Create corresponding solver", "index.html#autotoc_md5", null ],
+      [ "Compile and run", "index.html#autotoc_md6", null ],
       [ "internal", null, [
         [ "ProxOperator", "structoptim_1_1internal_1_1ProxOperator.html", "structoptim_1_1internal_1_1ProxOperator" ],
         [ "ProxWrapper", "structoptim_1_1internal_1_1ProxWrapper.html", "structoptim_1_1internal_1_1ProxWrapper" ],

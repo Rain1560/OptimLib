@@ -1,18 +1,38 @@
-<!-- HTML header for doxygen 1.9.8-->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="$langISO">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Doxygen Awesome" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Custom CSS theme for doxygen html-documentation with lots of customization parameters." />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="Doxygen Awesome" />
+<meta name="twitter:description" content="Custom CSS theme for doxygen html-documentation with lots of customization parameters." />
+<!-- END twitter metadata -->
 <title>OptimLib: OptimLib &nbsp;</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
 <script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
     DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="resize.js"></script>
@@ -28,39 +48,26 @@
 });
 </script>
 <script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
-$darkmode
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/jothepro/doxygen-awesome-css" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr id="projectrow">
-  <td id="projectalign">
-   <div id="projectname">OptimLib<span id="projectnumber">&#160;1.0.0</span>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">OptimLib
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
   </td>
  </tr>
-   <!--BEGIN FULL_SIDEBAR-->
-   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.svg"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
-          </span>
-        </div>
-</td></tr>
-   <!--END FULL_SIDEBAR-->
  </tbody>
 </table>
 </div>
@@ -117,19 +124,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="title">OptimLib &#160; </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md4">Overview</a></li>
-<li class="level1"><a href="#autotoc_md5">Installation</a></li>
-<li class="level1"><a href="#autotoc_md6">Usage</a><ul><ul><li class="level3"><a href="#autotoc_md7">Implement Problem Class</a></li>
-<li class="level3"><a href="#autotoc_md8">Create corresponding solver</a></li>
-<li class="level3"><a href="#autotoc_md9">Compile and run</a></li>
-</ul>
-</ul>
-</li>
-</ul>
-</div>
 <div class="textblock"><p><a class="anchor" id="md_README"></a>OptimLib is a C++ library of numerical optimization algorithms. It is designed to be a lightweight, efficient, and easy-to-use library for solving unconstrained and constrained optimization problems. The library is header-only with template classes and functions.</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md1"></a>
 Overview</h1>
 <ul>
 <li>c++17 or later, c++20 is recommended.</li>
@@ -149,7 +145,7 @@ Overview</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Installation</h1>
 <p>The library using these libraries:</p><ul>
 <li>Logging library: <a href="https://github.com/gabime/spdlog.git">spdlog</a></li>
@@ -158,10 +154,10 @@ Installation</h1>
 </ul>
 <p>The library using git submodules. To clone the repository and its submodules, use the following command:</p>
 <div class="fragment"><div class="line">git clone --recurse-submodules</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
 Usage</h1>
 <p>All the algorithms are implemented as template classes and offer a <code>fp_t solve(Mat&lt;fp_t&gt; x)</code> method that returns the final loss and modifies the input matrix <code>x</code> to the optimal solution. Take <code>NewtonCG</code> as an example, you need to following the steps below:</p>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md4"></a>
 Implement Problem Class</h3>
 <p>Navigate to <a href="problem.html">problem</a> page to see what method that you need to implement for each solver. Here is an example of a problem class(or <code>HessProblem</code>) for the <code>NewtonCG</code> solver:</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> fp_t&gt;</div>
@@ -207,11 +203,11 @@ Implement Problem Class</h3>
 <div class="line">        H(1, 1) = 2.0;</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-<div class="ttc" id="astructoptim_1_1BaseProblem_html_aac9c43dffa30e4dc2192dda6037498ca"><div class="ttname"><a href="structoptim_1_1BaseProblem.html#aac9c43dffa30e4dc2192dda6037498ca">optim::BaseProblem::loss</a></div><div class="ttdeci">virtual fp_t loss(const Mat&lt; fp_t &gt; &amp;in_x)=0</div><div class="ttdoc">loss function</div></div>
-<div class="ttc" id="astructoptim_1_1GradProblem_html_a26ecfbdfa2d4e1733986a1a6a65293a7"><div class="ttname"><a href="structoptim_1_1GradProblem.html#a26ecfbdfa2d4e1733986a1a6a65293a7">optim::GradProblem::grad</a></div><div class="ttdeci">virtual void grad(const Mat&lt; fp_t &gt; &amp;in_x, Mat&lt; fp_t &gt; &amp;out_x)=0</div><div class="ttdoc">gradient function</div></div>
-<div class="ttc" id="astructoptim_1_1HessProblem_html"><div class="ttname"><a href="structoptim_1_1HessProblem.html">optim::HessProblem</a></div><div class="ttdef"><b>Definition:</b> BaseProblem.hpp:46</div></div>
-<div class="ttc" id="astructoptim_1_1HessProblem_html_a47c871fa6be61379e35efdc3c90662ab"><div class="ttname"><a href="structoptim_1_1HessProblem.html#a47c871fa6be61379e35efdc3c90662ab">optim::HessProblem::hess</a></div><div class="ttdeci">virtual void hess(const Mat&lt; fp_t &gt; &amp;in_x, Mat&lt; fp_t &gt; &amp;out_x)=0</div><div class="ttdoc">Hessian function.</div></div>
-</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md8"></a>
+<div class="ttc" id="astructoptim_1_1BaseProblem_html_aac9c43dffa30e4dc2192dda6037498ca"><div class="ttname"><a href="structoptim_1_1BaseProblem.html#aac9c43dffa30e4dc2192dda6037498ca">optim::BaseProblem::loss</a></div><div class="ttdeci">virtual fp_t loss(const Mat&lt; fp_t &gt; &amp;in_x)=0</div><div class="ttdoc">loss function that needs to be minimized.</div></div>
+<div class="ttc" id="astructoptim_1_1GradProblem_html_a26ecfbdfa2d4e1733986a1a6a65293a7"><div class="ttname"><a href="structoptim_1_1GradProblem.html#a26ecfbdfa2d4e1733986a1a6a65293a7">optim::GradProblem::grad</a></div><div class="ttdeci">virtual void grad(const Mat&lt; fp_t &gt; &amp;in_x, Mat&lt; fp_t &gt; &amp;out_x)=0</div><div class="ttdoc">gradient function that computes the gradient of the loss function</div></div>
+<div class="ttc" id="astructoptim_1_1HessProblem_html"><div class="ttname"><a href="structoptim_1_1HessProblem.html">optim::HessProblem</a></div><div class="ttdef"><b>Definition:</b> BaseProblem.hpp:47</div></div>
+<div class="ttc" id="astructoptim_1_1HessProblem_html_a47c871fa6be61379e35efdc3c90662ab"><div class="ttname"><a href="structoptim_1_1HessProblem.html#a47c871fa6be61379e35efdc3c90662ab">optim::HessProblem::hess</a></div><div class="ttdeci">virtual void hess(const Mat&lt; fp_t &gt; &amp;in_x, Mat&lt; fp_t &gt; &amp;out_x)=0</div><div class="ttdoc">Hessian function that computes the Hessian of the loss function.</div></div>
+</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md5"></a>
 Create corresponding solver</h3>
 <p>In the main function first create a shared_ptr to the problem, then create the solver and call the <code>solve</code> method.</p>
 <p>Here is an example of the main function:</p>
@@ -231,14 +227,13 @@ Create corresponding solver</h3>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md6"></a>
 Compile and run</h3>
 <p>Compile command: </p><div class="fragment"><div class="line">g++ main.cpp -std=c++20 -I */include -I */eigen3/Eigen -I */spdlog/include -DOPTIM_USE_EIGEN</div>
 </div><!-- fragment --><p>Possible output: </p><div class="fragment"><div class="line">err to true result: 0</div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
-<!-- HTML footer for doxygen 1.9.8-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

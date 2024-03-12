@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Doxygen Awesome" />
 <meta name="twitter:description" content="Custom CSS theme for doxygen html-documentation with lots of customization parameters." />
 <!-- END twitter metadata -->
-<title>OptimLib: Member List</title>
+<title>OptimLib: Line Search</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -101,7 +101,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('structoptim_1_1GDAccelerator.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_docs_static_line_search.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -119,20 +119,64 @@ $(document).ready(function(){initNavTree('structoptim_1_1GDAccelerator.html','')
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">optim::GDAccelerator&lt; fp_t &gt; Member List</div>  </div>
+<div class="title">Line Search </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>BaseArgs</b> typedef (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>GradFunc</b> typedef (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>init</b>(BaseArgs &amp;) (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>release</b>() (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>update</b>(int iter, GradFunc grad_f, BaseArgs &amp;arg) (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#autotoc_md15">Algorithms Details</a><ul><li class="level2"><a href="#autotoc_md16">Armijo Line Search</a></li>
+<li class="level2"><a href="#autotoc_md17">Zhang-Hager Line Search</a></li>
+<li class="level2"><a href="#autotoc_md18">More-Thuente Line Search</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#autotoc_md19">Usage</a></li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md15"></a>
+Algorithms Details</h1>
+<p>Below Line Search algorithms are trying to find a step $\alpha_k$ that satisfies different conditions. To make sure the optimization algorithms are converging, a proper Line Search algorithm is significant.</p>
+<p>We define 2 line search functions: $\phi(\alpha) = f(x + \alpha d)$ and auxiliary function $\psi(\alpha) = \phi(\alpha) - \phi(0) - \alpha \phi'(0)$.</p>
+<h2><a class="anchor" id="autotoc_md16"></a>
+Armijo Line Search</h2>
+<p>Armijo line search is a backtracking line search algorithm that satisfies the Armijo condition: $\phi(\alpha) \leq \phi(0) + c_1 \alpha \phi'(0)$. The algorithm step is computed by the following steps:</p>
+<p>The back tracking algorithm is described as follows:</p><ol type="1">
+<li>check if Armijo condition is satisfied, if not, reduce the step size by multiplying a factor $\text{decay_rate} \in (0, 1)$.</li>
+<li>repeat step 1 until the condition is satisfied or the maximum number of iterations is reached.</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md17"></a>
+Zhang-Hager Line Search</h2>
+<p>Zhang-Hager line search is a non-monotone line search algorithm that satisfies the following condition:</p>
+<p>$$ \begin{align*} \phi(\alpha_k) &amp;\leq C_k + \rho \alpha_k \phi'(0) \ C_k &amp;= \frac{\gamma Q_{k-1}C_{k-1} + f(x_k)}{Q_k}\ Q_k &amp;= \gamma Q_{k-1} + 1 \end{align*} $$</p>
+<p>We using back tracking method like Armijo line search.</p>
+<h2><a class="anchor" id="autotoc_md18"></a>
+More-Thuente Line Search</h2>
+<p>The More-Thuente line search algorithm is a line search algorithm that satisfies the strong Wolfe conditions:</p>
+<p>$$ \left\{ \begin{align*} \phi(\alpha) &amp;\leq \phi(0) + c_1 \alpha \phi'(0) \ |\phi'(\alpha)| &amp;\leq c_2 |\phi'(0)| \ c_1 \in (0, \frac{1}{2}) &amp;\quad c_2 \in (0, 1) <br  />
+ \end{align*} \right. $$</p>
+<p>Note that $c_1$ should be close to 0 and $c_2$ should be close to 1. Otherwise it will be hard to find a step that satisfies the conditions.</p>
+<p>The algorithm step is computed by the following steps:</p>
+<p>Denote $\alpha_l, \alpha_u, \alpha_t$ and there corresponding function values and derivatives as $f_l, f_u, f_t, g_l, g_u, g_t$. After step 4 below, we ensure that $f_l \leq f_u$. When the bracket is true, the minimum of $\phi$ is guaranteed to be within the interval $[\ \alpha_l, \alpha_u\ ]$.</p><ol type="1">
+<li>check if the current step satisfies the strong Wolfe conditions. If it does, update loss and gradient then return.</li>
+<li>If not, let \( \alpha_l = \alpha_u = 0, \alpha_t = t_k \) and <code>auxiliary = true</code>. Initialize the interval of uncertainty.</li>
+<li>select a trial value base on \( \alpha_l, \alpha_u, \alpha_t \) and their corresponding function values and derivatives. We force the step to be within the interval.</li>
+<li>use \( \alpha_t \) to update \( \alpha_l, \alpha_u\).</li>
+<li>check if \( \alpha_l \) satisfies the strong Wolfe conditions.</li>
+<li>let \( \alpha_t \) be the new trial step and update the function value and derivative.</li>
+<li>check if we should switch to "Modified Updating Method" and if bracket is true.</li>
+<li>update the interval of uncertainty, go to step 3.</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md19"></a>
+Usage</h1>
+<p>All line search class offers <code>void line_search(LineSearchArgs&lt;fp_t,use_prox&gt; &amp;arg)</code> member function. Before you call this function, you should set the following member variables of <code>LineSearchArgs</code>:</p>
+<div class="fragment"><div class="line">step <span class="comment">// The initial step size</span></div>
+<div class="line">prev_x <span class="comment">// The previous point, where the line search starts</span></div>
+<div class="line">prev_loss <span class="comment">// The loss at the previous point</span></div>
+<div class="line">prev_grad <span class="comment">// The (smoothing part)gradient at the previous point</span></div>
+<div class="line">direction <span class="comment">// The search direction, which is the negative gradient in most cases</span></div>
+</div><!-- fragment --><p>If <code>use_prox</code> is <code>true</code>, the line search class will calculate the gradient map base on your step size and store it in <code>prev_grad_map</code>. After the line search, we will storage the new point in <code>cur_x</code> and the new loss in <code>cur_loss</code>. If you set <code>update_cur_grad = true</code>, we will also storage the new gradient in <code>cur_grad</code>. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

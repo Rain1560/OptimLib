@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Doxygen Awesome" />
 <meta name="twitter:description" content="Custom CSS theme for doxygen html-documentation with lots of customization parameters." />
 <!-- END twitter metadata -->
-<title>OptimLib: Member List</title>
+<title>OptimLib: Problem</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -101,7 +101,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('structoptim_1_1GDAccelerator.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_docs_static_problem.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -119,20 +119,69 @@ $(document).ready(function(){initNavTree('structoptim_1_1GDAccelerator.html','')
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">optim::GDAccelerator&lt; fp_t &gt; Member List</div>  </div>
+<div class="title">Problem </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>BaseArgs</b> typedef (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>GradFunc</b> typedef (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>init</b>(BaseArgs &amp;) (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>release</b>() (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>update</b>(int iter, GradFunc grad_f, BaseArgs &amp;arg) (defined in <a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a>)</td><td class="entry"><a class="el" href="structoptim_1_1GDAccelerator.html">optim::GDAccelerator&lt; fp_t &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#autotoc_md8">Unconstrained Optimization</a><ul><li class="level2"><a href="#autotoc_md9">Gradient Descent</a></li>
+<li class="level2"><a href="#autotoc_md10">(Quasi)Newton&#39;s Method</a></li>
+<li class="level2"><a href="#autotoc_md11">Newton&#39;s Method</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#autotoc_md12">Constrained Optimization</a><ul><li class="level2"><a href="#autotoc_md13">Augmented Lagrangian Method</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md8"></a>
+Unconstrained Optimization</h1>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Gradient Descent</h2>
+<p><code>using Problem = ProxWrapper&lt;fp_t, GradProblem, use_prox&gt;;</code></p>
+<p>You have to implement the following member functions of the problem class:</p>
+<ol type="1">
+<li>Smoothing Case:<ul>
+<li><code>fp_t loss(const Mat&lt;fp_t&gt; &amp;x)</code>compute the total loss at point <code>x</code></li>
+<li><code>void grad(const Mat&lt;fp_t&gt; &amp;x, Mat&lt;fp_t&gt; &amp;g)</code>compute the gradient at point <code>x</code> and store it in <code>g</code>.</li>
+</ul>
+</li>
+<li>Non-smoothing Case:<ul>
+<li><code>fp_t sm_loss(const Mat&lt;fp_t&gt; &amp;x)</code> compute the smooth part of the loss at point <code>x</code></li>
+<li><code>fp_t nsm_loss(const Mat&lt;fp_t&gt; &amp;x)</code> compute the non-smooth part of the loss at point <code>x</code></li>
+<li><code>fp_t loss(const Mat&lt;fp_t&gt; &amp;x)</code> compute the total loss at point <code>x</code>, which is the sum of <code>sm_loss</code> and <code>nsm_loss</code> does not need to be implemented.</li>
+<li><code>void grad(const Mat&lt;fp_t&gt; &amp;x, Mat&lt;fp_t&gt; &amp;g)</code> compute the gradient of <b>smoothing part</b> of loss function at point <code>x</code> and store it in <code>g</code>.</li>
+<li><code>void prox(fp_t step, const Mat&lt;fp_t&gt; &amp;in_x, Mat&lt;fp_t&gt; &amp;out_x)</code> compute the proximal operator at point <code>in_x</code> with step size <code>step</code></li>
+</ul>
+</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md10"></a>
+(Quasi)Newton's Method</h2>
+<p><code>using Problem = GradProblem&lt;fp_t&gt;;</code></p>
+<p>Like problem of <code>Gradient Descent</code>, you have to implement the following member functions of the problem class:</p>
+<ul>
+<li><code>fp_t loss(const Mat&lt;fp_t&gt; &amp;x)</code> compute the total loss at point <code>x</code></li>
+<li><code>void grad(const Mat&lt;fp_t&gt; &amp;x, Mat&lt;fp_t&gt; &amp;g)</code> compute the gradient at point <code>x</code> and store it in <code>g</code>.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md11"></a>
+Newton's Method</h2>
+<p>The problem class of <code>NewtonLDLT</code> and <code>NewtonCG</code>.</p>
+<p><code>using Problem = HessProblem&lt;fp_t&gt;;</code></p>
+<p>You should not only implement member functions of <code>GradProblem&lt;fp_t&gt;</code> like （L）BFGS， but also the following member functions of the problem class:</p><ul>
+<li><code>void hess(const Mat&lt;fp_t&gt; &amp;x, Mat&lt;fp_t&gt; &amp;H)</code> compute the Hessian at point <code>x</code> and store it in <code>H</code>.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md12"></a>
+Constrained Optimization</h1>
+<h2><a class="anchor" id="autotoc_md13"></a>
+Augmented Lagrangian Method</h2>
+<p>You should implement the following member functions of the problem class:</p><ul>
+<li><code>void grad(const Mat&lt;fp_t&gt; &amp;x, Mat&lt;fp_t&gt; &amp;g)</code> compute the gradient of the <b>augmented Lagrangian function</b> at point <code>x</code> and store it in <code>g</code>.</li>
+<li><code>void equality_constraint(const Mat&lt;fp_t&gt; &amp;x, Mat&lt;fp_t&gt; &amp;c)</code> compute the equality constraint at point <code>x</code> and store it in <code>c</code>.</li>
+<li><code>void inequality_constraint(const Mat&lt;fp_t&gt; &amp;x, Mat&lt;fp_t&gt; &amp;c)</code> compute the inequality constraint at point <code>x</code> and store it in <code>c</code>. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
