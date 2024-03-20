@@ -24,8 +24,10 @@
 #endif
 
 #ifdef OPTIM_USE_EIGEN
+#define BMO_USE_EIGEN
 #include <Eigen/Eigen>
 #elif OPTIM_USE_ARMA
+#define BMO_USE_ARMA
 #include <armadillo>
 #else
 #error "Eigen or Arma is required for this library. Add -DOPTIM_USE_EIGEN to compiler flags."
