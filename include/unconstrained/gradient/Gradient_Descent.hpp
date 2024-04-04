@@ -7,10 +7,13 @@
 #include "base/BaseSolver.hpp"
 #include "Accelerator.hpp"
 #include "Step_Sceduler.hpp"
-/// @cond
+
 namespace optim
 {
-
+    /// @brief Gradient Descent
+    /// @details Gradient Descent is a first-order optimization algorithm that using negative gradient as the line search direction. You can specify the line search criterion, step scheduler and accelerator.
+    /// @tparam fp_t floating-point type
+    /// @tparam use_prox whether to use proximal operator
     template <typename fp_t, bool use_prox = false>
     class GradientDescent
         : public LSBaseSolver<fp_t, use_prox>
@@ -49,6 +52,7 @@ namespace optim
 
         fp_t solve(Mat<fp_t> &x) override
         {
+            iter = 0;
             LineSearchArgs<fp_t, use_prox> arg(x);
             Mat<fp_t> prev_x = x;
             fp_t diff_x_nrm, diff_abs_f, g_nrm;
@@ -57,6 +61,11 @@ namespace optim
             arg.step = this->step;
             arg.update_cur_loss(prob.get());
             arg.update_cur_grad(prob.get());
+            if constexpr (use_prox)
+                arg.update_cur_grad_map(prob.get());
+            g_nrm = arg.grad_norm();
+            if (g_nrm < gtol)
+                goto over;
             arg.direction = -arg.cur_grad;
             ls->init(prob, arg);
             arg.flush(); // move cur to prev
@@ -79,12 +88,8 @@ namespace optim
                 prev_x -= arg.cur_x, diff_x_nrm = BMO_FRO_NORM(prev_x);
                 diff_abs_f = std::abs(arg.cur_loss - arg.prev_loss);
                 if constexpr (use_prox)
-                {
                     arg.update_cur_grad_map(prob.get());
-                    g_nrm = BMO_FRO_NORM(arg.cur_grad_map);
-                }
-                else
-                    g_nrm = BMO_FRO_NORM(arg.cur_grad);
+                g_nrm = arg.grad_norm();
                 if (iter % 5 == 0)
                     logger.info("[GD] iter: {:<5d}| loss: {:<16g}| step: {:<10g}\n|g_nrm: {:<12g}| diff_x_nrm: {:<10g}| diff_abs_f: {:<10g}",
                                 iter, arg.cur_loss, arg.step, g_nrm, diff_x_nrm, diff_abs_f);
@@ -106,5 +111,5 @@ namespace optim
     template <typename T>
     using ProxGD = GradientDescent<T, true>;
 };
-/// @endcond
+
 #endif // !_OPTIM_PROXIMAL_GRADIENT_DESCENT_HPP_

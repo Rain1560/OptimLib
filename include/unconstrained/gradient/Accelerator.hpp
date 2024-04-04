@@ -14,6 +14,10 @@ namespace optim
 
         virtual void init(BaseArgs &){};
 
+        /// @brief update cur_x, direction and cur_grad base on current prev_x, prev_grad and cur_x.
+        /// @param iter current iteration
+        /// @param grad_f for computing gradient
+        /// @param arg storage prev_x, prev_grad, cur_x, cur_grad, direction
         virtual void update(
             int iter,
             GradFunc grad_f,
@@ -36,7 +40,7 @@ namespace optim
         fp_t momentum = 0.9;
 
     private:
-        Mat<fp_t> v; // velocity = x_{k+1} - x_k
+        Mat<fp_t> v; ///< velocity = x_{k+1} - x_k
 
     public:
         void update(
@@ -63,7 +67,8 @@ namespace optim
         using GradFunc = typename GDAccelerator<fp_t>::GradFunc;
         using Constant = OptimConst<fp_t>;
 
-        Mat<fp_t> G, RG; // G = sum(g^2)
+        Mat<fp_t> G, ///< G = sum(g_i.^2)
+            RG;      ///< RG = sqrt(G+eps)
 
     public:
         void init(BaseArgs &arg) override
@@ -100,7 +105,8 @@ namespace optim
         using Constant = OptimConst<fp_t>;
 
         fp_t pho = 0.9;
-        Mat<fp_t> M, RM;
+        Mat<fp_t> M, ///< \(M_k = \pho * M_{k-1} + (1-\pho)g_k.*g_k\)
+            RM;      ///< \(RM = \sqrt(M+\eps)\)
 
     public:
         void init(BaseArgs &arg) override
