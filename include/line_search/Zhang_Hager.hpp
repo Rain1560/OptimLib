@@ -2,8 +2,6 @@
 #ifndef _OPTIM_ZHANG_HAGER_HPP_
 #define _OPTIM_ZHANG_HAGER_HPP_
 
-
-
 #include "base.hpp"
 
 namespace optim
@@ -44,6 +42,9 @@ namespace optim
         void line_search(Args &arg) override
         {
             optim_assert(arg.step > 0, "step must be positive.");
+            arg.step = std::max(
+                std::min(arg.step, this->max_step),
+                this->min_step);
             iter = 0; // reset iter
             fp_t dTg; // d.dot(g) in sm prob or
             // or (cur_x - prev_x) / step .dot(g_grad_map) in nsm prob

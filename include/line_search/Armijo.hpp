@@ -9,16 +9,16 @@ namespace optim
     struct ArmijoLineSearch final
         : public LineSearch<fp_t, use_prox>
     {
-        using Problem = LineSearch<fp_t, use_prox>::Problem;
+        using Problem = typename LineSearch<fp_t, use_prox>::Problem;
         using Args = LineSearchArgs<fp_t, use_prox>;
 
         int max_iter = 10;
         fp_t armijo_c = 0.95;
         fp_t decay_rate = 0.1;
 
-        void line_search(Args &args)
+        void line_search(Args &arg)
         {
-            optim_assert(args.step > 0, "step must be positive.");
+            optim_assert(arg.step > 0, "step must be positive.");
             int iter = 0;
             fp_t dTg;
             for (iter = 1; iter <= max_iter; iter++)

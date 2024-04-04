@@ -149,9 +149,9 @@ namespace optim
         update_cur_grad(Problem *prob)
         {
             prob->grad(this->cur_x, this->cur_grad);
-            this->cur_grad_map = this->cur_x - this->cur_grad;
-            prob->prox(1, this->cur_grad_map, this->tmp);
-            this->cur_grad_map = (this->cur_x - this->tmp) / this->step;
+            // this->cur_grad_map = this->cur_x - this->cur_grad;
+            // prob->prox(1, this->cur_grad_map, this->tmp);
+            // this->cur_grad_map = (this->cur_x - this->tmp) / this->step;
         }
 
         /// @brief Update the previous gradient mapping
