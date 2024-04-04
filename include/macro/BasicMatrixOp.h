@@ -1,12 +1,14 @@
 #pragma once
-#ifndef _OPTIMLIB_MACRO_MATRIX_OP_H_
-#define _OPTIMLIB_MACRO_MATRIX_OP_H_
+#ifndef __BASIC_MATRIX_OPERATIONS_HPP__
+#define __BASIC_MATRIX_OPERATIONS_HPP__
 
 /*-------------------Get Data------------------*/
 #if defined(BMO_USE_EIGEN)
 #define BMO_GET_DATA(X) (X).data()
+#define BMO_GET_SP_DATA (X) (X).valuePtr()
 #elif defined(BMO_USE_ARMA)
 #define BMO_GET_DATA(X) (X).memptr()
+#define BMO_GET_SP_DATA(X) (X).values
 #endif
 /*------------------- N cols-------------------*/
 #if defined(BMO_USE_EIGEN)

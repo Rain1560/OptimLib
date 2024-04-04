@@ -37,33 +37,59 @@ namespace optim
 {
 #if defined(OPTIM_USE_EIGEN)
     using Index = Eigen::Index;
-    template <typename fp_t> //= double
+    
+    template <typename fp_t>
     using Mat = Eigen::Matrix<fp_t, Eigen::Dynamic, Eigen::Dynamic>;
-    template <typename fp_t> //= double
-    using Row = Eigen::Matrix<fp_t, 1, Eigen::Dynamic>;
-    template <typename fp_t> // = double
-    using Col = Eigen::Matrix<fp_t, Eigen::Dynamic, 1>;
-    template <typename fp_t> //= double
-    using MapCol = Eigen::Map<Col<fp_t>>;
-    template <typename fp_t> //= double
-    using MapRow = Eigen::Map<Row<fp_t>>;
-    template <typename fp_t> //= double
+    template <typename fp_t>
+    using SpMat = Eigen::SparseMatrix<fp_t>;
+    template <typename fp_t>
     using MapMat = Eigen::Map<Mat<fp_t>>;
+    template <typename fp_t>
+    using MapSpMat = Eigen::Map<SpMat<fp_t>>;
+
+    template <typename fp_t>
+    using Col = Eigen::Matrix<fp_t, Eigen::Dynamic, 1>;
+    template <typename fp_t>
+    using SpCol = Eigen::SparseVector<fp_t>;
+    template <typename fp_t>
+    using MapCol = Eigen::Map<Col<fp_t>>;
+    template <typename fp_t>
+    using MapSpCol = Eigen::Map<SpCol<fp_t>>;
+
+    template <typename fp_t>
+    using Row = Eigen::Matrix<fp_t, 1, Eigen::Dynamic>;
+    template <typename fp_t>
+    using SpRow = Eigen::SparseVector<fp_t>;
+    template <typename fp_t>
+    using MapRow = Eigen::Map<Row<fp_t>>;
+    template <typename fp_t>
+    using MapSpRow = Eigen::Map<SpRow<fp_t>>;
 #elif defined(OPTIM_USE_ARMA)
-    // TODO: using template alias
     using Index = arma::uword;
     template <typename fp_t>
     using Mat = arma::Mat<fp_t>;
     template <typename fp_t>
-    using Row = arma::Row<fp_t>;
+    using SpMat = arma::SpMat<fp_t>;
+    template <typename fp_t>
+    using MapMat = arma::Mat<fp_t>;
+
     template <typename fp_t>
     using Col = arma::Col<fp_t>;
     template <typename fp_t>
+    using SpCol = arma::SpCol<fp_t>;
+    template <typename fp_t>
     using MapCol = arma::Col<fp_t>;
+    template <typename fp_t>
+    using MapSpCol = arma::SpCol<fp_t>;
+
+    template <typename fp_t>
+    using Row = arma::Row<fp_t>;
+    template <typename fp_t>
+    using SpRow = arma::SpRow<fp_t>;
     template <typename fp_t>
     using MapRow = arma::Row<fp_t>;
     template <typename fp_t>
-    using MapMat = arma::Mat<fp_t>;
+    using MapSpRow = arma::SpRow<fp_t>;
 #endif
 };
 
