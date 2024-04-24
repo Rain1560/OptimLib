@@ -26,7 +26,7 @@
 #ifdef OPTIM_USE_EIGEN
 #define BMO_USE_EIGEN
 #include <Eigen/Eigen>
-#elif OPTIM_USE_ARMA
+#elif defined(OPTIM_USE_ARMA)
 #define BMO_USE_ARMA
 #include <armadillo>
 #else

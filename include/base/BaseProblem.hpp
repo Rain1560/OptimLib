@@ -45,13 +45,16 @@ namespace optim
     struct HessProblem
         : public GradProblem<fp_t>
     {
-        /// @brief Hessian function that computes the Hessian of the loss function
-        /// @details the in_x may not be a vector, so you need to treat a matrix as a vector. i.e. your Hessian matrix should be matched with resize(in_x,size(in_x),1).
-        /// @param in_x  the point to evaluate
-        /// @param out_x  the output Hessian
-        virtual void hess(
-            const Mat<fp_t> &in_x,
-            Mat<fp_t> &out_x) = 0;
+        virtual void hess_forward(
+            const Mat<fp_t> &x,
+            Mat<fp_t> &d)
+        {
+            throw std::runtime_error("Hessian not implemented");
+        };
+
+        virtual void hess_backward(
+            const Mat<fp_t> &x,
+            Mat<fp_t> &d) = 0;
     };
 
     namespace internal
@@ -118,6 +121,9 @@ namespace optim
               bool use_prox = false>
     using ProxWrapper = typename internal::ProxWrapper<
         fp_t, Problem, use_prox>::type;
+
+    template <typename fp_t>
+    using ProxGradProblem = typename internal::ProxOperator<fp_t, GradProblem>;
 }
 
 #endif
